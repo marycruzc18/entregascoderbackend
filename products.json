@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Zarcillos",
+    "description": "Zarcillo Estrella",
+    "price": 13000,
+    "thumbnail": "imagen_zarcillo",
+    "code": "001",
+    "stock": 80
+  },
+  {
+    "id": 2,
+    "title": "Pulseras",
+    "description": "Pulsera de Plata",
+    "price": 20000,
+    "thumbnail": "imagen_pulsera",
+    "code": "002",
+    "stock": 50
+  }
+]
