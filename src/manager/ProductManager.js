@@ -1,4 +1,4 @@
-const fs = require("fs");
+import fs from "fs";
 
 class ProductManager {
     constructor(path) {
@@ -77,12 +77,16 @@ class ProductManager {
     }
     
     async getProductById(id) {
+
         try {
             // Obtener la lista de productos existentes
             const products = await this.getProducts();
 
+            // Convertir el ID a un número entero
+            const productId = parseInt(id); 
+
             // Buscar el producto por ID
-            const product = products.find(product => product.id === id);
+            const product = products.find(product => product.id === productId);
 
             if (product) {
                 return product;
@@ -136,49 +140,31 @@ class ProductManager {
 }
 
 // Ejemplo de uso
-const manager = new ProductManager("./products.json");
+//const manager = new ProductManager("./products.json");
 
 
-    const test = async () => {
-        try {
-            // Agregar productos
-            await manager.addProduct("Zarcillos", "Zarcillo Estrella", 10200, "imagen_zarcillo", "001", 100);
-            await manager.addProduct("Pulseras", "Pulsera de Plata", 20000, "imagen_pulsera", "002", 50);
-            await manager.addProduct("Cinturón", "Cinturón negro", 15000, "imagen_cinturon", "003", 75);
+   // const test = async () => {
+       /// try {
+       // Agregar productos
+         //   await manager.addProduct("Zarcillos", "Zarcillo Estrella", 10200, "imagen_zarcillo", "001", 100);
+          //  await manager.addProduct("Pulseras", "Pulsera de Plata", 20000, "imagen_pulsera", "002", 50);
+          //  await manager.addProduct("Cinturón", "Cinturón negro", 15000, "imagen_cinturon", "003", 75);
+          //  await manager.addProduct("Cartera", "Cartera grande", 35000, "imagen_cartera", "004", 20);
+          //  await manager.addProduct("Collar", "Collar", 10000, "imagen_collar", "005", 25);
+          //  await manager.addProduct("Lentes", "Lentes", 17000, "imagen_lentes", "006", 15);
+           // await manager.addProduct("Reloj", "Reloj", 15000, "imagen_reloj", "007", 5);
     
-            // Obtener todos los productos
-            console.log("Todos los productos:");
-            console.log(await manager.getProducts());
-    
-            // Buscar un producto por su ID
-            const productId = 2; 
-            console.log(`Buscar producto con ID ${productId}:`);
-            const product = await manager.getProductById(productId);
-            console.log("Producto encontrado:", product);
+           
 
-            //Actualizar producto
-            await manager.updateProduct(1, { price: 13000, stock: 80 });
-            
-            // Obtener todos los productos para verificar la actualización
-            console.log("Productos actualizados:");
-            console.log(await manager.getProducts())
-            
-            // Eliminar un producto
-            const productIdToDelete = 3;
-            console.log(`Eliminar producto con ID ${productIdToDelete}:`);
-            await manager.deleteProduct(productIdToDelete);
+     //   } catch (error) {
+         //   console.error("Error:", error);
+    //    }
 
-            // Obtener todos los productos después de eliminar uno
-            console.log("Productos después de eliminar uno:");
-            console.log(await manager.getProducts());
-
-        } catch (error) {
-            console.error("Error:", error);
-        }
-
-     ;
+ //    ;
        
 
-    };
+ //   };
 
-test();
+//test();
+
+export default ProductManager;
