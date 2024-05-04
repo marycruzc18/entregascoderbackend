@@ -1,0 +1,82 @@
+[
+  {
+    "id": 4,
+    "title": "Cartera",
+    "description": "Cartera grande",
+    "price": 35000,
+    "thumbnail": "imagen_cartera",
+    "code": "004",
+    "stock": 20
+  },
+  {
+    "id": 5,
+    "title": "Collar",
+    "description": "Collar",
+    "price": 10000,
+    "thumbnail": "imagen_collar",
+    "code": "005",
+    "stock": 25
+  },
+  {
+    "id": 6,
+    "title": "Lentes",
+    "description": "Lentes",
+    "price": 17000,
+    "thumbnail": "imagen_lentes",
+    "code": "006",
+    "stock": 15
+  },
+  {
+    "id": 7,
+    "title": "Reloj",
+    "description": "Reloj",
+    "price": 15000,
+    "thumbnail": "imagen_reloj",
+    "code": "007",
+    "stock": 5
+  },
+  {
+    "id": 8,
+    "title": "Cartera Rosada",
+    "description": "Cartera rosada",
+    "code": "008",
+    "price": 44000,
+    "status": "true",
+    "stock": 15,
+    "thumbnail": "https://www.google.com/search?sca_esv=de93c5c4281f23a7&rlz=1C1JJTC_esAR1099AR1099&q=cartera+rosada&uds=AMwkrPth2lwGf-lsu6J4oEsDB3N5tpc_dkW4sBv8BPcJv7e2krB7P69zcoxZJu4ytq6w2BDf83h2paLtaBJ-xq89Vlj7UJuHSbQ43y5eMVSbopciVUBzFMXfPXBxAXlPfPcnh3virG8ibIvf49nZ6qP_JtQSk4DCH4soQxbUWSAgk9VW1HFTlOCyRxNF6AOXg7X55y91JN83E1-cR-96YoOhZfl2Bc6KpeKZtGwuKb4PHKXRM3pp24E1JEdkJ8NKOSIMUiz-xadkncuuumaDMoe3Ek9TSTTsoYsLlcq_SrWB_ZP1d5TqgzM&udm=2&prmd=isvnbmtz&sa=X&ved=2ahUKEwjFt5iBwO-FAxXnrpUCHeFQCZcQtKgLegQIExAB&biw=1366&bih=607&dpr=1#vhid=e7OMza197A-3DM&vssid=mosaic",
+    "category": "carteras"
+  },
+  {
+    "id": 9,
+    "title": "Lentes Verdes",
+    "description": "Lentes Verdes",
+    "code": "009",
+    "price": 37000,
+    "status": "true",
+    "stock": 37,
+    "category": "lentes",
+    "thumbnail": "https://www.google.com/search?q=lentes+verdes&sca_esv=de93c5c4281f23a7&rlz=1C1JJTC_esAR1099AR1099&udm=2&biw=1366&bih=607&ei=ac4zZoiHPJHM1sQP9MWXoAw&ved=0ahUKEwjI34KDwO-FAxURppUCHfTiBcQQ4dUDCBA&uact=5&oq=lentes+verdes&gs_lp=Egxnd3Mtd2l6LXNlcnAiDWxlbnRlcyB2ZXJkZXMyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAESPEfUABYyRxwAXgAkAEAmAFboAHJB6oBAjEzuAEDyAEA-AEBmAINoALLCKgCAMICCBAAGIAEGLEDwgIEEAAYA8ICChAAGIAEGEMYigXCAg0QABiABBixAxhDGIoFmAMEkgcEMTEuMqAHykE&sclient=gws-wiz-serp#vhid=Sj9TwP6Ywf0nmM&vssid=mosaic"
+  },
+  {
+    "id": 10,
+    "title": "Cartera Azul",
+    "description": "Cartera azul",
+    "code": "0010",
+    "price": 51000,
+    "status": "true",
+    "stock": 35,
+    "category": "carteras",
+    "thumbnail": "https://www.google.com/search?q=cartera+azul&sca_esv=de93c5c4281f23a7&rlz=1C1JJTC_esAR1099AR1099&udm=2&biw=1366&bih=607&ei=ANQzZrmWF9Pf1sQP1r6TsA0&ved=0ahUKEwi5loutxe-FAxXTr5UCHVbfBNYQ4dUDCBA&uact=5&oq=cartera+azul&gs_lp=Egxnd3Mtd2l6LXNlcnAiDGNhcnRlcmEgYXp1bDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgARI_UJQuwhY7D5wAngAkAECmAG6AqAB3BKqAQgxNS41LjEuMbgBA8gBAPgBAZgCDqAC9AmoAgDCAgoQABiABBhDGIoFwgIIEAAYgAQYsQPCAg4QABiABBixAxiDARiKBcICDRAAGIAEGLEDGEMYigXCAgsQABiABBixAxiDAZgDAogGAZIHBDEwLjSgB_5x&sclient=gws-wiz-serp#vhid=FrYIUzhpCcUuSM&vssid=mosaic"
+  },
+  {
+    "id": 11,
+    "title": "Lentes Blancos",
+    "description": "Lentes Blancos",
+    "code": "0011",
+    "price": 24000,
+    "status": "true",
+    "stock": 35,
+    "category": "lentes",
+    "thumbnail": "https://www.google.com/search?q=lentes+blancos&sca_esv=de93c5c4281f23a7&rlz=1C1JJTC_esAR1099AR1099&udm=2&biw=1366&bih=607&ei=NmE2ZtjsFaDI1sQP4J6IuAI&oq=lentes+bla&gs_lp=Egxnd3Mtd2l6LXNlcnAiCmxlbnRlcyBibGEqAggAMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABEj-Q1CRAliPNXACeACQAQOYAYQBoAHRDqoBBDE3LjS4AQHIAQD4AQGYAgygAtgIqAIAwgIKEAAYgAQYQxiKBcICCBAAGIAEGLEDwgIEEAAYA8ICDRAAGIAEGLEDGEMYigXCAhAQABiABBixAxhDGIMBGIoFmAMCiAYBkgcDOC40oAfsag&sclient=gws-wiz-serp#vhid=d9KwXxLnzfAZmM&vssid=mosaic"
+  }
+]

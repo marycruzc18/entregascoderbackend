@@ -5,10 +5,10 @@ class ProductManager {
         this.path = path;
     }
 
-    async addProduct(title, description, price, thumbnail, code, stock) {
+    async addProduct(title, description, code, price, status, stock, category, thumbnail) {
         try {
-            // Validar que los campos sean obligatorios 
-            if (!title || !description || !price || !thumbnail || !code || !stock) {
+            // Validar que los campos sean obligatorios a excepción de thumbnail
+            if (!title || !description || !code || !price || !status || !stock || !category ) {
                 throw new Error("Todos los campos son obligatorios");
             }
     
@@ -25,10 +25,12 @@ class ProductManager {
                 id: await this.getProdId(), 
                 title,
                 description,
-                price,
-                thumbnail,
                 code,
-                stock
+                price,
+                status:'true',
+                stock,
+                category,
+                thumbnail
             };
     
             // Agregar el nuevo producto a la lista de productos existentes
@@ -37,6 +39,7 @@ class ProductManager {
             // Guardar los productos actualizados en el archivo 
             await fs.promises.writeFile(this.path, JSON.stringify(productsData, null, 2));
             console.log("Producto agregado correctamente");
+            return newProduct;
         } catch (error) {
             console.error("Error al agregar producto:", error.message);
         }
@@ -58,7 +61,7 @@ class ProductManager {
             return prodId + 1; // Incrementar el ID más alto encontrado
         } catch (error) {
             console.error("Error al obtener el último ID de producto:", error);
-            return 1; // Si hay un error, devolver 1 como ID predeterminado
+            return 1; 
         }
     }
 
@@ -101,10 +104,13 @@ class ProductManager {
   async updateProduct(productId, updateFields){
     try{
         //Obtener todos los productos 
-        let products = await this.getProducts();
+        const products = await this.getProducts();
+
+        // Convertir el ID a un número entero
+        const productIdInt = parseInt(productId)
 
         //Buscar el producto por ID 
-        const index = products.findIndex(product => product.id === productId);
+        const index = products.findIndex(product => product.id === productIdInt);
         if(index === -1){
             throw new Error (`No se encontró ningún producto con el ID ${productId}.`);
         }
@@ -115,6 +121,14 @@ class ProductManager {
         //Guardar los productos actualizados 
         await fs.promises.writeFile(this.path, JSON.stringify(products,null, 2));
         console.log("Producto actualizado correctamente")
+
+        // Obtener el producto actualizado
+        const updatedProduct = products[index];
+
+        // Devolver los datos actualizados del producto
+        return updatedProduct;
+
+
     }catch(error){
         console.error("Error al actualizar el producto:", error.message);
     }
@@ -122,49 +136,33 @@ class ProductManager {
   }
 
   async deleteProduct(productId){
-    try{
-        //Obtener todos los productos 
+    try {
+        // Obtener todos los productos 
         let products = await this.getProducts();
 
-        //Se filtran los productos se elimina el que tenga el ID  especifico
-        products = products.filter(product => product.id !== productId);
+         // Convertir el ID a un número entero
+         const productIdInt = parseInt(productId)
 
-        //Guardar productos actualizados 
+        // Encontrar el índice del producto con el ID especificado
+        const index = products.findIndex(product => product.id === productIdInt);
+
+        // Verificar si se encontró el producto
+        if (index === -1) {
+            console.log(`No se encontró ningún producto con el ID ${productId}`);
+            return;
+        }
+
+        // Eliminar el producto del array de productos
+        products.splice(index, 1);
+
+        // Guardar productos actualizados 
         await fs.promises.writeFile(this.path, JSON.stringify(products, null, 2));
-        console.log(`Producto con ID ${productId} eliminado correctamente`);   
-    }catch(error){
+        console.log(`Producto con ID ${productId} eliminado correctamente`);
+    } catch(error) {
         console.error("Error al eliminar el producto:", error.message);
+        throw error;
     }
 }
-    
 }
-
-// Ejemplo de uso
-//const manager = new ProductManager("./products.json");
-
-
-   // const test = async () => {
-       /// try {
-       // Agregar productos
-         //   await manager.addProduct("Zarcillos", "Zarcillo Estrella", 10200, "imagen_zarcillo", "001", 100);
-          //  await manager.addProduct("Pulseras", "Pulsera de Plata", 20000, "imagen_pulsera", "002", 50);
-          //  await manager.addProduct("Cinturón", "Cinturón negro", 15000, "imagen_cinturon", "003", 75);
-          //  await manager.addProduct("Cartera", "Cartera grande", 35000, "imagen_cartera", "004", 20);
-          //  await manager.addProduct("Collar", "Collar", 10000, "imagen_collar", "005", 25);
-          //  await manager.addProduct("Lentes", "Lentes", 17000, "imagen_lentes", "006", 15);
-           // await manager.addProduct("Reloj", "Reloj", 15000, "imagen_reloj", "007", 5);
-    
-           
-
-     //   } catch (error) {
-         //   console.error("Error:", error);
-    //    }
-
- //    ;
-       
-
- //   };
-
-//test();
 
 export default ProductManager;
