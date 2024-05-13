@@ -39,6 +39,7 @@ class ProductManager {
             // Guardar los productos actualizados en el archivo 
             await fs.promises.writeFile(this.path, JSON.stringify(productsData, null, 2));
             console.log("Producto agregado correctamente");
+            
             return newProduct;
         } catch (error) {
             console.error("Error al agregar producto:", error.message);

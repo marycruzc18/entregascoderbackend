@@ -1,32 +1,5 @@
 [
   {
-    "id": 4,
-    "title": "Cartera",
-    "description": "Cartera grande",
-    "price": 35000,
-    "thumbnail": "imagen_cartera",
-    "code": "004",
-    "stock": 20
-  },
-  {
-    "id": 5,
-    "title": "Collar",
-    "description": "Collar",
-    "price": 10000,
-    "thumbnail": "imagen_collar",
-    "code": "005",
-    "stock": 25
-  },
-  {
-    "id": 6,
-    "title": "Lentes",
-    "description": "Lentes",
-    "price": 17000,
-    "thumbnail": "imagen_lentes",
-    "code": "006",
-    "stock": 15
-  },
-  {
     "id": 7,
     "title": "Reloj",
     "description": "Reloj",
@@ -78,5 +51,60 @@
     "stock": 35,
     "category": "lentes",
     "thumbnail": "https://www.google.com/search?q=lentes+blancos&sca_esv=de93c5c4281f23a7&rlz=1C1JJTC_esAR1099AR1099&udm=2&biw=1366&bih=607&ei=NmE2ZtjsFaDI1sQP4J6IuAI&oq=lentes+bla&gs_lp=Egxnd3Mtd2l6LXNlcnAiCmxlbnRlcyBibGEqAggAMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABEj-Q1CRAliPNXACeACQAQOYAYQBoAHRDqoBBDE3LjS4AQHIAQD4AQGYAgygAtgIqAIAwgIKEAAYgAQYQxiKBcICCBAAGIAEGLEDwgIEEAAYA8ICDRAAGIAEGLEDGEMYigXCAhAQABiABBixAxhDGIMBGIoFmAMCiAYBkgcDOC40oAfsag&sclient=gws-wiz-serp#vhid=d9KwXxLnzfAZmM&vssid=mosaic"
+  },
+  {
+    "id": 12,
+    "title": "Cartera Gris",
+    "description": "Cartera Gris",
+    "code": "0012",
+    "price": 55000,
+    "status": "true",
+    "stock": 10,
+    "category": "carteras",
+    "thumbnail": "https://wiowi.com.py/tienda/moda/mujer/cartera-mujer-kallman-satchel-gris-guess/"
+  },
+  {
+    "id": 13,
+    "title": "Cartera Azul",
+    "description": "Cartera Azul",
+    "code": "0013",
+    "price": 50000,
+    "status": "true",
+    "stock": 13,
+    "category": "carteras",
+    "thumbnail": "https://wiowi.com.py/tienda/moda/mujer/cartera-mujer-kallman-satchel-gris-guess/"
+  },
+  {
+    "id": 14,
+    "title": "Cartera Roja",
+    "description": "Cartera Roja",
+    "code": "0014",
+    "price": 54000,
+    "status": "true",
+    "stock": 17,
+    "category": "carteras",
+    "thumbnail": "https://www.google.com/search?sca_esv=8ffd5b3fe64f0225&sca_upv=1&rlz=1C1JJTC_esAR1099AR1099&q=mujer+cartera+roja&uds=ADvngMjIlLeH6JmF8XYRfQNKteaQeBD-uqXPsJHmPfVnovlBKYZsoZ33wKU1womLX2Ban7OaMwCxnKFoRQ8ZQBl8z7MD0SVmE76cehIX-hIn3oanh0OHVyIaTZ7VvWX93mJt0PvZl0kTWBxPli8TO2Xqn69TgxaqZQaoDQK_5PTIyhvllFQY0k_fMmBiPQN0prfbXpJj4AhaBqDrnptalTCx_9JnqViqqwvfR2tc-oboH_ywDfJHBhHvJCz5FRluVa3gnvp2bXyXRnpGlwwyTLp0UGNdNsObV8Sof43u2mP81PvHo6XVGdG48f3JR3KNC6X26zqYSLE6&udm=2&sa=X&ved=2ahUKEwiW0pTu3YqGAxVprJUCHeWVA84QxKsJegQIDhAB&ictx=0&biw=1366&bih=607&dpr=1#vhid=lovHTGBMca1BJM&vssid=mosaic"
+  },
+  {
+    "id": 15,
+    "title": "Lentes Blancos",
+    "description": "Lentes Blancos",
+    "code": "0015",
+    "price": 30000,
+    "status": "true",
+    "stock": 4,
+    "category": "lentes",
+    "thumbnail": "https://www.google.com/search?q=lentes+blancos&sca_esv=8ffd5b3fe64f0225&sca_upv=1&rlz=1C1JJTC_esAR1099AR1099&udm=2&biw=1366&bih=607&ei=mBVCZv2GKODf1sQP4v6cuAM&ved=0ahUKEwj9sqLw3YqGAxXgr5UCHWI_BzcQ4dUDCBA&uact=5&oq=lentes+blancos&gs_lp=Egxnd3Mtd2l6LXNlcnAiDmxlbnRlcyBibGFuY29zMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABEjmN1ChAljdNHABeACQAQKYAfABoAGHFaoBBjI4LjMuMbgBA8gBAPgBAZgCEKAC_guoAgDCAgYQABgIGB7CAggQABiABBixA8ICChAAGIAEGEMYigXCAhAQABiABBixAxhDGIMBGIoFwgINEAAYgAQYsQMYQxiKBZgDOIgGAZIHBjEyLjMuMaAHw6kB&sclient=gws-wiz-serp#vhid=YfGYpw5sS0i9cM&vssid=mosaic"
+  },
+  {
+    "id": 16,
+    "title": "Lentes Verdes",
+    "description": "Lentes Verdes",
+    "code": "0016",
+    "price": 30000,
+    "status": "true",
+    "stock": 8,
+    "category": "lentes",
+    "thumbnail": "https://www.google.com/search?q=lentes+verdes&sca_esv=8ffd5b3fe64f0225&sca_upv=1&rlz=1C1JJTC_esAR1099AR1099&udm=2&biw=1366&bih=607&ei=IUFCZsiIKLDX1sQPjd-m8Ak&ved=0ahUKEwiInc-yh4uGAxWwq5UCHY2vCZ4Q4dUDCBA&uact=5&oq=lentes+verdes&gs_lp=Egxnd3Mtd2l6LXNlcnAiDWxlbnRlcyB2ZXJkZXMyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAESMYgULwFWK0fcAF4AJABAJgBYKABtgeqAQIxMrgBA8gBAPgBAZgCCKAC9gTCAgoQABiABBhDGIoFwgIIEAAYgAQYsQOYAwCIBgGSBwM3LjGgB5dA&sclient=gws-wiz-serp#vhid=BspFhgcVhbnA4M&vssid=mosaic"
   }
 ]
