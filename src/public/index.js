@@ -55,4 +55,3 @@ function updateProductList(products) {
         productList.appendChild(listItem);
     });
 }
-

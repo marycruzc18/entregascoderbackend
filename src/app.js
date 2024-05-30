@@ -1,3 +1,4 @@
+import {initMongoDB} from './dao/mongodb/connection.js';
 import express from "express";
 import handlebars from "express-handlebars";
 import { __dirname } from "./utils.js";
@@ -6,8 +7,16 @@ import productsRouter from './routes/products.router.js';
 import cartRouter from './routes/cart.router.js';
 import homeRouter from './routes/home.router.js';
 import realRouter from './routes/realTimeProducts.router.js';
-import ProductManager from "./manager/ProductManager.js";
+import chatRouter from './routes/chat.router.js';
+import ProductManager from "./dao/filesystem/ProductManager.js";
 const productManager = new ProductManager(`${__dirname}/data/productos.json`);
+import MessageDao from './dao/mongodb/messages.dao.js';
+
+import morgan from 'morgan';
+
+initMongoDB()
+
+
 
 
 const app = express();
@@ -15,6 +24,7 @@ const app = express();
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
 app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
@@ -24,6 +34,7 @@ app.use('/api/products', productsRouter)
 app.use('/api/carts', cartRouter)
 app.use('/vista/home', homeRouter)
 app.use('/realtimeproducts', realRouter)
+app.use('/chat', chatRouter)
 
 
 
@@ -38,7 +49,7 @@ const httpServer = app.listen(8080, () => {
     console.log(`🟢 Usuario conectado: ${socket.id}`);
 
 
- // Enviar datos de productos al cliente cuando se conecta
+    // Enviar datos de productos al cliente cuando se conecta
     const products = await productManager.getProducts();
     socket.emit('initialProducts', products);
 
@@ -69,6 +80,33 @@ const httpServer = app.listen(8080, () => {
         }
     });
 
+    // Manejar el evento de nuevo usuario
+    socket.on('newUser', (username) => {
+        console.log(`${username} se ha conectado al chat`);
+        socket.broadcast.emit('newUser', username);
+    });
+
+    socket.on('chat:message', async (msg) => {
+        try {
+            const messageDao = new MessageDao();
+            
+            if (!msg.user) {
+                throw new Error('El campo user es requerido');
+            }
+            await messageDao.saveMessage(msg);
+            socketServer.emit('messages', await messageDao.getAll());
+        } catch (error) {
+            console.error('Error al guardar el mensaje:', error.message);
+        }
+    });
+    
+
+    // Manejar el evento de escribir un mensaje
+    socket.on('chat:typing', (data) => {
+        socket.broadcast.emit('chat:typing', data);
+    });
+    
+
     socket.on('disconnect', ()=>{
         console.log('🔴 Usuario desconectado');
       })
@@ -78,7 +116,7 @@ const httpServer = app.listen(8080, () => {
 
 
 
-   
+ 
   
     
 
