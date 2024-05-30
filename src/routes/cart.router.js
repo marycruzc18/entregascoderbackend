@@ -1,40 +1,32 @@
-import {Router} from "express";
+import { Router } from 'express';
+import CartModel from '../dao/mongodb/models/carts.model.js';
+
 const router = Router();
 
-import CartManager from "../manager/CartManager.js";
-const cartManager = new CartManager("./src/data/carrito.json")
-
+// Crear un nuevo carrito
 router.post('/', async (req, res) => {
     try {
-        // Crear un nuevo carrito 
-        const newCart = {
-            products: req.body.products || [] // Si no se especifica ningún producto, se crea un array vacío
-        };
-
-        // Agregar el carrito 
-        const cartId = await cartManager.addCart(newCart);
-
-
-        
-        res.status(201).json({ id: cartId });
+        const newCart = new CartModel({
+            products: req.body.products || [] 
+        });
+        const savedCart = await newCart.save();
+        res.status(201).json({ id: savedCart._id });
     } catch (error) {
         console.error("Error al crear un nuevo carrito:", error.message);
         res.status(500).json({ error: "Error interno del servidor al crear un nuevo carrito" });
     }
 });
 
+// Obtener un carrito por ID
 router.get('/:cid', async (req, res) => {
-    const cartId = req.params.cid; 
+    const cartId = req.params.cid;
 
     try {
-        // Obtener el carrito con el ID proporcionado
-        const cart = await cartManager.getProductsInCart(cartId);
-
+        const cart = await CartModel.findById(cartId).populate('products.productId');
         if (!cart) {
             res.status(404).json({ mensaje: `No se encontró ningún carrito con el ID ${cartId}` });
             return;
         }
-
         res.status(200).json(cart);
     } catch (error) {
         console.error("Error al obtener el carrito:", error.message);
@@ -42,35 +34,38 @@ router.get('/:cid', async (req, res) => {
     }
 });
 
-
-
+// Agregar un producto al carrito
 router.post('/:cid/product/:pid', async (req, res) => {
     const cartId = req.params.cid;
     const productId = req.params.pid;
+    const quantity = req.body.quantity || 1; 
 
     try {
-        // Convertir el ID a un número entero
-        const cartIdInt = parseInt(cartId);
+        const cart = await CartModel.findById(cartId);
+        if (!cart) {
+            res.status(404).json({ mensaje: `No se encontró ningún carrito con el ID ${cartId}` });
+            return;
+        }
 
-        // Agregar el producto al carrito 
-        await cartManager.addProductToCart(cartIdInt, productId);
+        const existingProductIndex = cart.products.findIndex(item => item.productId.toString() === productId);
+        if (existingProductIndex >= 0) {
+            cart.products[existingProductIndex].quantity += quantity;
+        } else {
+            cart.products.push({ productId, quantity });
+        }
 
-        
-        res.status(200).json({ mensaje: `Producto con ID ${productId} agregado al carrito ${cartIdInt} correctamente` });
+        await cart.save();
+        res.status(200).json({ mensaje: `Producto con ID ${productId} agregado al carrito ${cartId} correctamente` });
     } catch (error) {
-        
         console.error("Error al agregar el producto al carrito:", error.message);
         res.status(500).json({ error: "Error interno del servidor al agregar el producto al carrito" });
     }
 });
 
-
+// Obtener todos los carritos
 router.get('/', async (req, res) => {
     try {
-        // Obtener todos los carritos
-        const carts = await cartManager.getCarts();
-
-    
+        const carts = await CartModel.find().populate('products.productId');
         res.status(200).json(carts);
     } catch (error) {
         console.error("Error al obtener los carritos:", error.message);
