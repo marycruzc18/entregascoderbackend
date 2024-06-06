@@ -1,16 +1,20 @@
 import express from 'express';
 import { ProductModel } from '../dao/mongodb/models/products.model.js';
+import ProductDao from '../dao/mongodb/products.dao.js';
+import { uploader } from '../middlewares/multer.js';
+
+const productDao = new ProductDao();
 
 const router = express.Router();
 
 // Obtener todos los productos
 router.get('/', async (req, res) => {
     try {
-        const products = await ProductModel.find();
-        res.json(products);
+        const { page, limit, sort, category } = req.query;
+        const response = await productDao.getProducts( page, limit, sort, category );
+        res.json(response);
     } catch (error) {
-        console.error("Error al obtener productos:", error.message);
-        res.status(500).json({ error: "Error al obtener productos" });
+        res.status(500).json({ status: 'error', message: error.message });
     }
 });
 
@@ -31,9 +35,22 @@ router.get('/:pid', async (req, res) => {
 });
 
 // Crear un nuevo producto
-router.post('/', async (req, res) => {
+router.post('/', uploader.single('thumbnail'), async (req, res) => {
     try {
-        const newProduct = new ProductModel(req.body);
+        const { title, description, code, price, status, stock, category } = req.body;
+        const thumbnail = req.file ? `/images/${req.file.filename}` : null; 
+
+        const newProduct = new ProductModel({
+            title,
+            description,
+            code,
+            price,
+            status,
+            stock,
+            category,
+            thumbnail
+        });
+
         const savedProduct = await newProduct.save();
         res.status(201).json(savedProduct);
     } catch (error) {
@@ -42,20 +59,43 @@ router.post('/', async (req, res) => {
     }
 });
 
+
 // Actualizar un producto existente
-router.put('/:pid', async (req, res) => {
+router.put('/:pid', uploader.single('thumbnail'), async (req, res) => {
     const productId = req.params.pid;
+    const { title, description, code, price, status, stock, category } = req.body;
+    
     try {
-        const updatedProduct = await ProductModel.findByIdAndUpdate(productId, req.body, { new: true });
-        if (!updatedProduct) {
-            return res.status(404).json({ error: "Error al actualizar el producto" });
+        const existingProduct = await ProductModel.findById(productId);
+        if (!existingProduct) {
+            return res.status(404).json({ error: "Producto no encontrado" });
         }
+
+        // Si se ha subido una nueva imagen, actualiza la ruta
+        const thumbnail = req.file ? `/images/${req.file.filename}` : existingProduct.thumbnail;
+
+        const updatedProduct = await ProductModel.findByIdAndUpdate(
+            productId,
+            {
+                title,
+                description,
+                code,
+                price,
+                status,
+                stock,
+                category,
+                thumbnail
+            },
+            { new: true }
+        );
+
         res.status(200).json(updatedProduct);
     } catch (error) {
         console.error("Error al actualizar el producto:", error.message);
         res.status(500).json({ error: "Error interno del servidor al actualizar el producto" });
     }
 });
+
 
 // Eliminar un producto
 router.delete('/:pid', async (req, res) => {
@@ -71,5 +111,7 @@ router.delete('/:pid', async (req, res) => {
         res.status(500).json({ error: "Error al eliminar el producto" });
     }
 });
+
+
 
 export default router;

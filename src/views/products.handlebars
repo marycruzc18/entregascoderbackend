@@ -1,0 +1,55 @@
+<div class="container-fluid">
+    <div class="row">
+        <header class="bg-dark text-white p-3">
+            <h1>Bienvenidos al Ecommerce</h1> 
+        </header>
+    </div>
+</div>
+
+<body>
+    <div class="container">
+        <h1 class="text-center">Productos</h1>
+        <div class="row">
+            {{#each products}}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="{{this.thumbnail}}" class="card-img-top" alt="{{this.title}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{this.title}}</h5>
+                        <p class="card-text">{{this.description}}</p>
+                        <p class="card-text"><strong>Precio: ${{this.price}}</strong></p>
+                        <button class="btn btn-success" onclick="addToCart('{{this._id}}')">
+                            <i class="fas fa-cart-plus"></i> Agregar al carrito
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        <div class="row justify-content-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item {{#unless pagination.hasPrevPage}}disabled{{/unless}}">
+                        <a class="page-link" href="{{#if pagination.hasPrevPage}}{{pagination.prevPageUrl}}{{else}}javascript:void(0){{/if}}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previo</span>
+                        </a>
+                    </li>
+                    {{#each pagination.pages}}
+                    <li class="page-item">
+                        <a class="page-link" href="{{this.url}}&page={{this.number}}">{{this.numberPgBar}}</a>
+                    </li>
+                    {{/each}}
+                    <li class="page-item {{#unless pagination.hasNextPage}}disabled{{/unless}}">
+                        <a class="page-link" href="{{#if pagination.hasNextPage}}{{pagination.nextPageUrl}}{{else}}javascript:void(0){{/if}}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Siguiente</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</body>
+</html>
+

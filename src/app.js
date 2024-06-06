@@ -1,16 +1,19 @@
-import {initMongoDB} from './dao/mongodb/connection.js';
 import express from "express";
 import handlebars from "express-handlebars";
 import { __dirname } from "./utils.js";
+import {initMongoDB} from './dao/mongodb/connection.js';
 import { Server } from "socket.io";
 import productsRouter from './routes/products.router.js';
 import cartRouter from './routes/cart.router.js';
 import homeRouter from './routes/home.router.js';
 import realRouter from './routes/realTimeProducts.router.js';
 import chatRouter from './routes/chat.router.js';
+import cartviewRouter from './routes/cart.views.router.js';
+import productsviewRouter from './routes/products.views.js';
 import ProductManager from "./dao/filesystem/ProductManager.js";
 const productManager = new ProductManager(`${__dirname}/data/productos.json`);
 import MessageDao from './dao/mongodb/messages.dao.js';
+
 
 import morgan from 'morgan';
 
@@ -26,6 +29,8 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
+
+
 app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views")
@@ -35,6 +40,8 @@ app.use('/api/carts', cartRouter)
 app.use('/vista/home', homeRouter)
 app.use('/realtimeproducts', realRouter)
 app.use('/chat', chatRouter)
+app.use('/products', productsviewRouter)
+app.use('/cart', cartviewRouter)
 
 
 
