@@ -1,14 +1,43 @@
 import { ProductModel } from "./models/products.model.js";
 
 export default class ProductDao {
-    async getProducts() {
+    async getProducts( page = 1, limit = 10, sort, category ) {
         try {
-            const products = await ProductModel.find({});
-            return products;
+
+            // filtro 
+            const filter = category ? { category: category } : {};
+
+            //paginación 
+
+       const options = {
+                page: parseInt(page),
+                limit: parseInt(limit),
+                sort: sort ? { price: sort === 'asc' ? 1 : -1 } : null
+            };
+
+            // Consultar los productos con paginación y filtro
+            const products = await ProductModel.paginate(filter, options);
+
+            // Construir el objeto de respuesta
+            const response = {
+                status: 'success',
+                payload: products.docs,
+                totalPages: products.totalPages,
+                prevPage: products.prevPage || null,
+                nextPage: products.nextPage || null,
+                page: products.page,
+                hasPrevPage: products.hasPrevPage,
+                hasNextPage: products.hasNextPage,
+                prevLink: products.hasPrevPage ? `/products?page=${products.prevPage}` : null,
+                nextLink: products.hasNextPage ? `/products?page=${products.nextPage}` : null
+            };
+
+            return response;
         } catch (error) {
-            throw new Error(`Error al obtener todos los productos: ${error.message}`);
+            throw new Error(`Error al obtener los productos: ${error.message}`);
         }
     }
+
 
     async getProdId(productId) {
         try {

@@ -1,0 +1,35 @@
+<div class="container-fluid">
+        <div class="row">
+            <header class="bg-dark text-white p-3">
+                <h1>Bienvenidos al Ecommerce</h1> 
+            </header>
+        </div>
+    </div>
+<body>
+  <div class="container">
+    <h1 class="text-center">Productos en el Carrito</h1>
+    <div class="row">
+      {{#each products}}
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <img src="{{this.thumbnail}}" class="card-img-top" alt="{{this.title}}">
+          <div class="card-body">
+            <h5 class="card-title">{{this.title}}</h5>
+            <p class="card-text">{{this.description}}</p>
+            <p class="card-text"><strong>Precio: ${{this.price}}</strong></p>
+            <p class="card-text"><strong>Cantidad: {{this.quantity}}</strong></p>
+            
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  <script>
+    function removeFromCart(productId) {
+      
+      console.log('Eliminar producto:', productId);
+    }
+  </script>
+</body>
+</html>
