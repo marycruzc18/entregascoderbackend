@@ -1,4 +1,7 @@
 import express from "express";
+import cookieParser from "cookie-parser";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 import handlebars from "express-handlebars";
 import { __dirname } from "./utils.js";
 import {initMongoDB} from './dao/mongodb/connection.js';
@@ -10,6 +13,8 @@ import realRouter from './routes/realTimeProducts.router.js';
 import chatRouter from './routes/chat.router.js';
 import cartviewRouter from './routes/cart.views.router.js';
 import productsviewRouter from './routes/products.views.js';
+import usersRouter from './routes/users.routes.js';
+import usersviewRouter from './routes/users.views.router.js';
 import ProductManager from "./dao/filesystem/ProductManager.js";
 const productManager = new ProductManager(`${__dirname}/data/productos.json`);
 import MessageDao from './dao/mongodb/messages.dao.js';
@@ -17,16 +22,31 @@ import MessageDao from './dao/mongodb/messages.dao.js';
 
 import morgan from 'morgan';
 
-initMongoDB()
 
+
+const storeConfig = {
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URL,
+        crypto: { secret: process.env.SECRET_KEY },
+        ttl: 180,
+    }),
+    secret: process.env.SECRET_KEY,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 180000 }
+};
 
 
 
 const app = express();
 
+initMongoDB()
+
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(session(storeConfig));
 app.use(morgan('dev'));
 
 
@@ -34,7 +54,6 @@ app.use(morgan('dev'));
 app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views")
-
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartRouter)
 app.use('/vista/home', homeRouter)
@@ -42,7 +61,8 @@ app.use('/realtimeproducts', realRouter)
 app.use('/chat', chatRouter)
 app.use('/products', productsviewRouter)
 app.use('/cart', cartviewRouter)
-
+app.use('/', usersRouter)
+app.use('/', usersviewRouter)
 
 
 

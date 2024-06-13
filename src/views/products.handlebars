@@ -1,8 +1,27 @@
 <div class="container-fluid">
     <div class="row">
-        <header class="bg-dark text-white p-3">
-            <h1>Bienvenidos al Ecommerce</h1> 
+        
+        <header class="bg-dark text-white p-3 d-flex justify-content-between align-items-center">
+           <div>
+                    <h1>Bienvenidos al Ecommerce</h1>
+    
+                  
+                      {{#if user}}
+                        <p>Bienvenido, {{user.first_name}} {{user.last_name}} ({{user.role}})</p>
+                    {{else}}
+                        <p>No estás autenticado</p>
+                    {{/if}}
+
+                
+            
+
+
+                </div>
+            <form action="logout" method="POST">
+                <button class="btn btn-success" type="submit">Logout</button>
+            </form> 
         </header>
+        
     </div>
 </div>
 

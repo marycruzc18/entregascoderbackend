@@ -1,13 +1,27 @@
 import express from 'express';
 import ProductDao from '../dao/mongodb/products.dao.js';
-import CartDao from '../dao/mongodb/carts.dao.js';
 import { validateLogin } from '../middlewares/validateLogin.js';
+
 
 const router = express.Router();
 const productDao = new ProductDao();
-const cartDao = new CartDao();
 
 
+const guestMiddleware = (req, res, next) => {
+    if (req.session.user) {
+        return res.redirect('/products');
+    }
+    next();
+};
+
+router.get('/login', guestMiddleware, (req, res) => {
+    res.render('login');
+});
+
+
+router.get('/register', guestMiddleware, (req, res) => {
+    res.render('register');
+});
 
 router.get('/products', validateLogin, async (req, res) => {
 
@@ -38,7 +52,7 @@ router.get('/products', validateLogin, async (req, res) => {
         };
 
         const user = req.session.user;
-        res.render('products', { user, products, pagination: pagination});
+        res.render('products', { user, products, pagination: pagination });
     } catch (error) {
         console.error('Error al obtener los productos:', error);
         res.status(500).send('Error interno del servidor');
@@ -48,15 +62,9 @@ router.get('/products', validateLogin, async (req, res) => {
 
 
 
-router.get('/:id', async (req, res) => {
-    try {
-        const productId = req.params.id;
-        const product = await productDao.getProdId(productId);
-        res.render('productDetails', { product });
-    } catch (error) {
-        console.error('Error al obtener el producto:', error);
-        res.status(500).send('Error interno del servidor');
-    }
-});
-
 export default router;
+
+
+
+
+
