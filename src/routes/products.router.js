@@ -12,6 +12,7 @@ router.get('/', async (req, res) => {
     try {
         const { page, limit, sort, category } = req.query;
         const response = await productDao.getProducts( page, limit, sort, category );
+        
         res.json(response);
     } catch (error) {
         res.status(500).json({ status: 'error', message: error.message });
