@@ -10,7 +10,7 @@ const cartDao = new CartDao();
 
 
 router.get('/products', validateLogin, async (req, res) => {
-
+   
     try {
         const { page = 1, limit = 10, sort, category } = req.query;
         const productsData = await productDao.getProducts(page, limit, sort, category);

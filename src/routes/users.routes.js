@@ -1,58 +1,76 @@
 import express from 'express';
+import passport from 'passport';
 import UserDao from '../dao/mongodb/users.dao.js';
 
-const userDao = new UserDao();
+ 
 const router = express.Router();
+const userDao = new UserDao();
 
-router.post('/register', async (req, res) =>{
-    try {
-        const { email, password } = req.body;
-        const role = (email === 'adminCoder@coder.com' && password === 'adminCod3r123') ? 'admin' : 'user';
-        const user = await userDao.register({ ...req.body, role });
-        if (!user) {
-            res.status(401).json({ msg: '¡El usuario ya existe!' });
-        } else {
-            res.redirect('/login');
+//Ruta para el registro 
+
+router.post('/register', (req, res, next) => {
+    passport.authenticate('register', (err, user, info) => {
+        if (err) {
+            return next(err);
         }
-    } catch (error) {
-        res.status(500).json({ msg: 'Error interno del servidor' });
-    }
+        if (!user) {
+            return res.status(401).json({ msg: info.message || '¡El usuario ya existe!' });
+        }
+
+        return res.redirect('/login');
+    })(req, res, next);
 });
 
-
-router.post('/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const user = await userDao.login(email, password);
+// Ruta para iniciar sesión
+router.post('/login',  (req, res) => {
+   
+    passport.authenticate('login', (err, user, info) => {
+        if (err) {
+            return next(err);
+        }
         if (!user) {
             return res.status(401).json({ msg: 'Credenciales incorrectas' });
         }
-        
-        req.session.user = {
-            id: user._id.toString(),
-            first_name: user.first_name,
-            last_name: user.last_name,
-            email: user.email,
-            role: user.role,
-            loggedIn: true
-        };
-         console.log('Usuario logueado:', req.session.user);
-       
-        res.redirect('/products');
-    } catch (error) {
-        console.error('Error al iniciar sesión:', error);
-        res.status(500).json({ msg: 'Error interno del servidor' });
-    }
+        req.logIn(user, (err) => {
+            if (err) {
+                return next(err);
+            }
+            req.session.user = {
+                id: user._id.toString(),
+                first_name: user.first_name,
+                last_name: user.last_name,
+                email: user.email,
+                role: user.role,
+                loggedIn: true
+            };
+            console.log('Usuario logueado:', req.session.user);
+            return res.redirect('/products');
+        });
+    })(req, res);
 });
 
 
+// Ruta para cerrar sesión
 router.post('/logout', (req, res) => {
-    req.session.destroy(err => {
+    req.logout(err => {
         if (err) {
             return res.status(500).json({ msg: 'No se pudo cerrar la sesión' });
         }
         res.redirect('/login');
     });
 });
+
+
+// Ruta para iniciar sesión con GitHub
+router.get('/register-github', passport.authenticate('github', { scope: ['user:email'] }));
+
+// Callback URL después de autenticarse con GitHub
+router.get('/profile', 
+    passport.authenticate('github', { failureRedirect: '/login' }),
+    (req, res) => {
+        // Autenticación exitosa, redirigir a /products
+        res.redirect('/products');
+    }
+);
 
 export default router;

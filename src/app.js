@@ -18,6 +18,9 @@ import usersviewRouter from './routes/users.views.router.js';
 import ProductManager from "./dao/filesystem/ProductManager.js";
 const productManager = new ProductManager(`${__dirname}/data/productos.json`);
 import MessageDao from './dao/mongodb/messages.dao.js';
+import passport from 'passport';
+import "./passport/passport.js";
+import "./passport/github_strategy.js";
 
 
 import morgan from 'morgan';
@@ -40,7 +43,9 @@ const storeConfig = {
 
 const app = express();
 
-initMongoDB()
+
+
+
 
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
@@ -49,7 +54,8 @@ app.use(cookieParser());
 app.use(session(storeConfig));
 app.use(morgan('dev'));
 
-
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
@@ -64,7 +70,7 @@ app.use('/cart', cartviewRouter)
 app.use('/', usersRouter)
 app.use('/', usersviewRouter)
 
-
+initMongoDB()
 
 const httpServer = app.listen(8080, () => {
     console.log("Escuchando al puerto 8080");
