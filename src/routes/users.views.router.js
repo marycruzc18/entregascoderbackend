@@ -1,14 +1,13 @@
 import express from 'express';
-import ProductDao from '../dao/mongodb/products.dao.js';
 import { validateLogin } from '../middlewares/validateLogin.js';
+import ProductDao from '../dao/mongodb/products.dao.js';
 
 
 const router = express.Router();
 const productDao = new ProductDao();
 
-
 const guestMiddleware = (req, res, next) => {
-    if (req.session.user) {
+    if (req.isAuthenticated()) {
         return res.redirect('/products');
     }
     next();
@@ -18,13 +17,12 @@ router.get('/login', guestMiddleware, (req, res) => {
     res.render('login');
 });
 
-
 router.get('/register', guestMiddleware, (req, res) => {
     res.render('register');
 });
 
 router.get('/products', validateLogin, async (req, res) => {
-
+   
     try {
         const { page = 1, limit = 10, sort, category } = req.query;
         const productsData = await productDao.getProducts(page, limit, sort, category);
@@ -52,7 +50,7 @@ router.get('/products', validateLogin, async (req, res) => {
         };
 
         const user = req.session.user;
-        res.render('products', { user, products, pagination: pagination });
+        res.render('products', { user, products, pagination: pagination});
     } catch (error) {
         console.error('Error al obtener los productos:', error);
         res.status(500).send('Error interno del servidor');
@@ -60,11 +58,4 @@ router.get('/products', validateLogin, async (req, res) => {
 });
 
 
-
-
 export default router;
-
-
-
-
-
