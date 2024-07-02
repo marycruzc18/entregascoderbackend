@@ -1,7 +1,7 @@
 import express from 'express';
 import ProductDao from '../dao/mongodb/products.dao.js';
 import CartDao from '../dao/mongodb/carts.dao.js';
-import { validateLogin } from '../middlewares/validateLogin.js';
+import { authenticateJWT } from '../middlewares/validateLogin.js';
 
 const router = express.Router();
 const productDao = new ProductDao();
@@ -9,7 +9,7 @@ const cartDao = new CartDao();
 
 
 
-router.get('/products', validateLogin, async (req, res) => {
+router.get('/products', authenticateJWT, async (req, res) => {
    
     try {
         const { page = 1, limit = 10, sort, category } = req.query;
@@ -37,7 +37,7 @@ router.get('/products', validateLogin, async (req, res) => {
             pages,
         };
 
-        const user = req.session.user;
+        const user = req.user;
         res.render('products', { user, products, pagination: pagination});
     } catch (error) {
         console.error('Error al obtener los productos:', error);

@@ -1,71 +1,40 @@
 import passport from 'passport';
-import { Strategy as LocalStrategy } from 'passport-local';
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import UserDao from '../dao/mongodb/users.dao.js';
+import cookieExtractor from '../cookieExtractor.js';
+import 'dotenv/config';
 
 const userDao = new UserDao();
 
-const strategyConfig = {
-    usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: true
+const opts = {
+    jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+    secretOrKey: process.env.JWT_SECRET
 };
 
-const signUp = async (req, email, password, done) => {
+passport.use('current', new JwtStrategy(opts, async (jwt_payload, done) => {
     try {
-        const existingUser = await userDao.getByEmail(email);
-        if (existingUser) {
-            return done(null, false, { message: '¡El usuario ya existe!' });
+        const user = await userDao.getById(jwt_payload.id);
+        if (user) {
+            return done(null, user);
+        } else {
+            return done(null, false);
         }
-
-        
-        const role = (email === 'adminCoder@coder.com' && password === 'adminCod3r123') ? 'admin' : 'user';
-
-    
-        const newUser = await userDao.register({ ...req.body, role });
-        return done(null, newUser);
-    } catch (error) {
-        console.error('Error en signUp:', error);
-        return done(error);
+    } catch (err) {
+        return done(err, false);
     }
-};
-
-
-const login = async (req, email, password, done) => {
-    try {
-        const user = await userDao.login(email, password);
-        if (!user) {
-            return done(null, false, { message: 'Credenciales incorrectas' });
-        }
-        return done(null, user);
-    } catch (error) {
-        console.log(error);
-        return done(error);
-    }
-};
-
-passport.use('register', new LocalStrategy(strategyConfig, signUp));
-passport.use('login', new LocalStrategy(strategyConfig, login));
+}));
 
 passport.serializeUser((user, done) => {
-    if (user && user._id) {
-        done(null, user._id);
-    } else {
-        done(new Error('Usuario no encontrado en serializeUser'), null);
-    }
+    done(null, user._id);
 });
 
 passport.deserializeUser(async (id, done) => {
     try {
         const user = await userDao.getById(id);
-        if (user) {
-            done(null, user);
-        } else {
-            done(new Error('Usuario no encontrado en deserializeUser'), null);
-        }
-    } catch (error) {
-        done(error);
+        done(null, user);
+    } catch (err) {
+        done(err, null);
     }
 });
-
 
 export default passport;

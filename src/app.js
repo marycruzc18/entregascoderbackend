@@ -15,12 +15,15 @@ import cartviewRouter from './routes/cart.views.router.js';
 import productsviewRouter from './routes/products.views.js';
 import usersRouter from './routes/users.routes.js';
 import usersviewRouter from './routes/users.views.router.js';
+import sessionRouter from './routes/session.router.js';
 import ProductManager from "./dao/filesystem/ProductManager.js";
 const productManager = new ProductManager(`${__dirname}/data/productos.json`);
 import MessageDao from './dao/mongodb/messages.dao.js';
 import passport from 'passport';
-import "./passport/passport.js";
+import "./passport/local_strategy.js";
 import "./passport/github_strategy.js";
+import "./passport/jwt_strategy.js";
+import "./passport/passport.js";
 
 
 import morgan from 'morgan';
@@ -69,6 +72,7 @@ app.use('/products', productsviewRouter)
 app.use('/cart', cartviewRouter)
 app.use('/', usersRouter)
 app.use('/', usersviewRouter)
+app.use('/api/sessions', sessionRouter)
 
 initMongoDB()
 
