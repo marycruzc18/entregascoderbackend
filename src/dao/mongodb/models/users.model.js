@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     email:{type: String, required: true, unique: true},
     age:{type:Number},
     password:{type: String, required: true},
-    role:{type: String, defaul: 'user'},
+    cart: { type: mongoose.Schema.Types.ObjectId, ref: 'Cart' },
+    role:{type: String, default: 'user'},
     isGithub: {
         type: Boolean,
         default: false
