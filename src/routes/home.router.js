@@ -1,18 +1,8 @@
-import {Router} from "express";
+import { Router } from 'express';
+import { getHomePage } from '../controllers/home.controller.js';
+
 const router = Router();
 
-
-import ProductManager from "../dao/filesystem/ProductManager.js";
-const productManager = new ProductManager("./src/data/productos.json")
-
-
-
-//Renderizar home.handlebars
-
-router.get('/', async (req,res) => {
-    const products= await productManager.getProducts();
-    res.render('home',{products})
-})
-
+router.get('/', getHomePage);
 
 export default router;

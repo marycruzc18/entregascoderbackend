@@ -24,19 +24,18 @@ import "./passport/local_strategy.js";
 import "./passport/github_strategy.js";
 import "./passport/jwt_strategy.js";
 import "./passport/passport.js";
-
-
+import config from "./config.js";
 import morgan from 'morgan';
 
 
 
 const storeConfig = {
     store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URL,
-        crypto: { secret: process.env.SECRET_KEY },
+        mongoUrl: config.MONGO_URL,
+        crypto: { secret: config.SECRET_KEY },
         ttl: 180,
     }),
-    secret: process.env.SECRET_KEY,
+    secret: config.SECRET_KEY,
     resave: false,
     saveUninitialized: false,
     cookie: { maxAge: 180000 }
