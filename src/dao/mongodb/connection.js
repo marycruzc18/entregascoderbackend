@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import 'dotenv/config'
+import config from '../../config.js'
 
-const MONGO_URL = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/ecommerce'
+const MONGO_URL = config.MONGO_URL || config.MONGO_URL_LOCAL
 
 
 export const  initMongoDB = async () => {

@@ -2,7 +2,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import UserDao from '../dao/mongodb/users.dao.js';
 import jwt from 'jsonwebtoken';
-import 'dotenv/config';
+import config from '../config.js';
 
 const userDao = new UserDao();
 
@@ -19,10 +19,10 @@ const signUp = async (req, email, password, done) => {
             return done(null, false, { message: '¡El usuario ya existe!' });
         }
 
-        const role = (email === process.env.EMAIL_ADMIN && password === process.env.PASS_ADMIN) ? 'admin' : 'user';
+        const role = (email === config.EMAIL_ADMIN && password === config.PASS_ADMIN) ? 'admin' : 'user';
         const newUser = await userDao.register({ ...req.body, role });
 
-        const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: newUser._id }, config.JWT_SECRET, { expiresIn: '5m' });
 
         return done(null, newUser, { token });
     } catch (error) {
@@ -38,7 +38,7 @@ const login = async (req, email, password, done) => {
             return done(null, false, { message: 'Credenciales incorrectas' });
         }
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '5m' });
+        const token = jwt.sign({ id: user._id }, config.JWT_SECRET, { expiresIn: '5m' });
 
         return done(null, user, { token });
     } catch (error) {
