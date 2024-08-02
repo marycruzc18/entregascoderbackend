@@ -73,6 +73,7 @@ app.use('/', usersRouter)
 app.use('/', usersviewRouter)
 app.use('/api/sessions', sessionRouter)
 
+
 initMongoDB()
 
 const httpServer = app.listen(8080, () => {

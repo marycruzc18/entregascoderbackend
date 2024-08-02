@@ -1,7 +1,8 @@
 import express from 'express';
 import { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct } from '../controllers/products.controller.js'
 import { uploader } from '../middlewares/multer.js';
-
+import { authenticate } from '../middlewares/authenticate.js';
+import { authorize } from '../middlewares/authorize.js'
 
 
 
@@ -14,15 +15,15 @@ router.get('/', getAllProducts);
 router.get('/:pid', getProductById);
 
 // Crear un nuevo producto
-router.post('/', uploader.single('thumbnail'), createProduct);
+router.post('/', uploader.single('thumbnail'), authenticate, authorize(['admin']), createProduct);
 
 
 // Actualizar un producto existente
-router.put('/:pid', uploader.single('thumbnail'), updateProduct);
+router.put('/:pid', uploader.single('thumbnail'), authenticate, authorize(['admin']), updateProduct);
 
 
 // Eliminar un producto
-router.delete('/:pid', deleteProduct);
+router.delete('/:pid', authenticate, authorize(['admin']), deleteProduct);
 
 
 

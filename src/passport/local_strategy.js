@@ -20,7 +20,11 @@ const signUp = async (req, email, password, done) => {
         }
 
         const role = (email === config.EMAIL_ADMIN && password === config.PASS_ADMIN) ? 'admin' : 'user';
-        const newUser = await userDao.register({ ...req.body, role });
+        const hashedPassword = createHash(password);
+        const newUser = await userDao.register({ ...req.body, password: hashedPassword, role });
+
+        // Crear el carrito asociado al usuario
+        await cartDao.createCart(newUser._id);
 
         const token = jwt.sign({ id: newUser._id }, config.JWT_SECRET, { expiresIn: '5m' });
 

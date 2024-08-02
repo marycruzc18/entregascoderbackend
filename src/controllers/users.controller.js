@@ -1,22 +1,22 @@
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
-import 'dotenv/config';
+import { registerUser, loginUser, logoutUser, getUserById } from '../services/users.service.js';
+import config from '../config.js'
 
-export const register = (req, res, next) => {
-    passport.authenticate('register', (err, user, info) => {
-        if (err) {
-            return next(err);
-        }
-        if (!user) {
-            return res.status(401).json({ msg: info.message || '¡El usuario ya existe!' });
-        }
-
+export const register = async (req, res, next) => {
+    
+    try {
+       
+        const user = await registerUser(req.body);
+    
         res.redirect('/login');
-    })(req, res, next);
+    } catch (error) {
+        next(error);
+    }
 };
 
 export const login = (req, res, next) => {
-    passport.authenticate('login', (err, user, info) => {
+    passport.authenticate('login', async (err, user, info) => {
         if (err) {
             console.error('Error en la autenticación:', err);
             return next(err);
@@ -26,50 +26,63 @@ export const login = (req, res, next) => {
             return res.status(401).json({ msg: 'Credenciales incorrectas' });
         }
 
-        req.logIn(user, (err) => {
-            if (err) {
-                console.error('Error al iniciar sesión:', err);
-                return next(err);
-            }
-            // Generar token JWT
-            const token = jwt.sign({ id: user._id, first_name: user.first_name, last_name: user.last_name, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-            // Establecer el token en una cookie
+        try {
+            const token = jwt.sign(
+                { id: user._id, first_name: user.first_name, last_name: user.last_name, role: user.role },
+                config.JWT_SECRET,
+                { expiresIn: '5m' }
+            );
             res.cookie('jwt', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
-
             console.log('Usuario logueado:', user);
-            return res.redirect('/products');
-        });
+            res.redirect('/products');
+        } catch (error) {
+            console.error('Error al iniciar sesión:', error);
+            next(error);
+        }
     })(req, res, next);
 };
 
-export const logout = (req, res) => {
-    req.logout(err => {
-        if (err) {
-            return res.status(500).json({ msg: 'No se pudo cerrar la sesión' });
-        }
+export const logout = async (req, res, next) => {
+    try {
+        await logoutUser(req);
         res.clearCookie('jwt');
         res.redirect('/login');
-    });
+    } catch (error) {
+        next(error);
+    }
 };
 
+export const getUser = async (req, res, next) => {
+    try {
+        const user = await getUserById(req.params.userId);
+        if (!user) {
+            return res.status(404).json({ msg: 'Usuario no encontrado' });
+        }
+        res.json(user);
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Autenticación con GitHub
 export const githubAuth = passport.authenticate('github', { scope: ['user:email'] });
 
+// Callback después de autenticarse con GitHub
 export const githubCallback = (req, res, next) => {
-    passport.authenticate('github', { failureRedirect: '/login' }, (err, user, info) => {
-        if (err) {
-            return next(err);
+    passport.authenticate('github', { failureRedirect: '/login' }, async (err, user, info) => {
+        if (err) return next(err);
+        if (!user) return res.redirect('/login');
+
+        try {
+            req.logIn(user, async (err) => {
+                if (err) return next(err);
+
+                const { token } = await loginUser(user);
+                res.cookie('jwt', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+                res.redirect('/products');
+            });
+        } catch (error) {
+            next(error);
         }
-        if (!user) {
-            return res.redirect('/login');
-        }
-        req.logIn(user, (err) => {
-            if (err) {
-                return next(err);
-            }
-            const token = jwt.sign({ id: user._id, first_name: user.first_name, last_name: user.last_name, role: user.role }, process.env.JWT_SECRET, { expiresIn: '5m' });
-            res.cookie('jwt', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
-            res.redirect('/products');
-        });
     })(req, res, next);
 };
