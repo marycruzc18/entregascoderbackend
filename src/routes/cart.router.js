@@ -7,9 +7,11 @@ import {
     removeProductFromCart,
     updateCartProducts,
     updateProductQuantity,
-    clearCart
+    clearCart,
+    purchaseCart
 } from '../controllers/cart.controller.js';
-
+import { authenticate } from '../middlewares/authenticate.js';
+import { authorize } from '../middlewares/authorize.js';
 
 const router = Router();
 
@@ -20,7 +22,7 @@ router.post('/', createCart)
 router.get('/:cid', getCartById)
 
 // Agregar un producto al carrito
-router.post('/:cid/product/:pid', addProductToCart)
+router.post('/:cid/product/:pid',authenticate, authorize(['user']), addProductToCart)
 
 // Obtener todos los carritos
 router.get('/', getAllCarts)
@@ -38,6 +40,8 @@ router.put('/:cid/products/:pid', updateProductQuantity)
 //Eliminar todos los productos del carrito 
 router.delete('/:cid', clearCart)
 
+// Ruta para finalizar la compra del carrito
+router.post('/:cid/purchase',authenticate,  purchaseCart);
 
 
 
