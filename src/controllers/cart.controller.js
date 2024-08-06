@@ -9,6 +9,8 @@ import {
     clearCart as clearCartService,
     purchaseCart as purchaseCartService 
 } from '../services/cart.service.js';
+import ErrorApp from '../utils/errorApp.js';
+import { ErrorMessage } from '../utils/errorMessages.js';
 
 export const createCart = async (req, res) => {
     try {
@@ -45,7 +47,17 @@ export const addProductToCart = async (req, res) => {
         res.status(200).json({ mensaje: `Producto con ID ${productId} agregado al carrito ${cartId} correctamente` });
     } catch (error) {
         console.error("Error al agregar el producto al carrito:", error.message);
-        res.status(500).json({ error: "Error interno del servidor al agregar el producto al carrito" });
+
+        if (error.message === 'Artículo del carrito no encontrado') {
+            const appError = new ErrorApp(ErrorMessage.CART_ITEM_NOT_FOUND.message, ErrorMessage.CART_ITEM_NOT_FOUND.status);
+            return res.status(appError.statusCode).json({ error: appError.message });
+        } else if (error.message === 'El artículo ya existe en el carrito') {
+            const appError = new ErrorApp(ErrorMessage.CART_ITEM_ALREADY_EXISTS.message, ErrorMessage.CART_ITEM_ALREADY_EXISTS.status);
+            return res.status(appError.statusCode).json({ error: appError.message });
+        } else {
+            const appError = new ErrorApp(ErrorMessage.INTERNAL_SERVER_ERROR.message, ErrorMessage.INTERNAL_SERVER_ERROR.status);
+            return res.status(appError.statusCode).json({ error: appError.message });
+        }
     }
 };
 

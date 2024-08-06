@@ -1,12 +1,17 @@
 import express from 'express';
 import { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct } from '../controllers/products.controller.js'
+import { getMockProducts } from '../controllers/mocking.controller.js';
 import { uploader } from '../middlewares/multer.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { authorize } from '../middlewares/authorize.js'
 
 
 
+
 const router = express.Router();
+
+//Obtener los productos con Mocking
+router.get('/mockingproducts', getMockProducts)
 
 // Obtener todos los productos
 router.get('/', getAllProducts);
@@ -24,6 +29,7 @@ router.put('/:pid', uploader.single('thumbnail'), authenticate, authorize(['admi
 
 // Eliminar un producto
 router.delete('/:pid', authenticate, authorize(['admin']), deleteProduct);
+
 
 
 
