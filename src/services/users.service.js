@@ -3,42 +3,49 @@ import config from '../config.js';
 import UserDao from '../dao/mongodb/users.dao.js';
 import CartDao from '../dao/mongodb/carts.dao.js';
 import { createHash, isValidPassword } from '../utils.js';
+import logger from '../logs/logger.js';
 
 const userDao = new UserDao();
 const cartDao = new CartDao();
 
 export const registerUser = async (userData) => {
-    const { email, password, first_name, last_name, age } = userData;
-    
-    // Asignar el rol de administrador si el correo y la contraseña coinciden
-    const role = (email === config.EMAIL_ADMIN && password === config.PASS_ADMIN) ? 'admin' : 'user';
+    try {
+        const { email, password, first_name, last_name, age } = userData;
 
-    // Hashear la contraseña
-    const hashedPassword = createHash(password);
-    
-    // Crear el usuario
-    const user = await userDao.register({
-        email,
-        password: hashedPassword,
-        first_name,
-        last_name,
-        age,
-        role
-    });
+        const existingUser = await userDao.getByEmail(email);
+        if (existingUser) {
+            logger.warn(`Intento de registro fallido: El usuario con email ${email} ya existe.`);
+            throw new Error('El usuario ya existe');
+        }
 
-    if (!user) {
-        throw new Error('El usuario ya existe');
+        const role = (email === config.EMAIL_ADMIN && password === config.PASS_ADMIN) ? 'admin' : 'user';
+
+        const hashedPassword = createHash(password);
+    
+        const user = await userDao.register({
+            email,
+            password: hashedPassword,
+            first_name,
+            last_name,
+            age,
+            role
+        });
+
+
+        const cart = await cartDao.createCart(user._id);
+
+    
+        user.cart = cart._id;
+        await user.save();
+
+        logger.info(`Usuario registrado exitosamente: ${email}`);
+        return user;
+    } catch (error) {
+        logger.error(`Error durante el registro del usuario: ${error.message}`);
+        throw error; 
     }
-
-    // Crear un carrito asociado al usuario
-    const cart = await cartDao.createCart(user._id);
-
-    // Actualizar el usuario con el carrito creado
-    user.cart = cart._id;
-    await user.save();
-
-    return user;
 };
+
 
 
 export const loginUser = async (email, password) => {
