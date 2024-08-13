@@ -16,6 +16,7 @@ import productsviewRouter from './routes_views/products.views.js';
 import usersRouter from './routes/users.routes.js';
 import usersviewRouter from './routes_views/users.views.router.js';
 import sessionRouter from './routes/session.router.js';
+import loggerTest from './routes_test/loggerTest.js';
 import ProductManager from "./dao/filesystem/ProductManager.js";
 const productManager = new ProductManager(`${__dirname}/data/productos.json`);
 import MessageDao from './dao/mongodb/messages.dao.js';
@@ -72,6 +73,7 @@ app.use('/cart', cartviewRouter)
 app.use('/', usersRouter)
 app.use('/', usersviewRouter)
 app.use('/api/sessions', sessionRouter)
+app.use('/loggerTest', loggerTest)
 
 
 initMongoDB()
