@@ -11,6 +11,7 @@ export default class UserDao{
             if (existUser) {
                 return null; // Usuario ya existe
             }
+            
             const user = new UserModel(userData);
             await user.save();
             return user;
@@ -66,5 +67,20 @@ async getByIdWithCart(userId) {
         throw new Error('Error al obtener el usuario: ' + error.message);
     }
 }
+
+
+async updateUserRole(userId, newRole) {
+    try {
+        const updatedUser = await UserModel.findByIdAndUpdate(
+            userId,
+            { role: newRole },
+            { new: true } 
+        );
+        return updatedUser;
+    } catch (error) {
+        throw new Error('Error al actualizar el rol del usuario: ' + error.message);
+    }
+}
+
 
 }

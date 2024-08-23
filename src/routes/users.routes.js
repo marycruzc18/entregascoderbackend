@@ -4,7 +4,8 @@ import {
     login,
     logout,
     githubAuth,
-    githubCallback
+    githubCallback,
+    changeUserRoleController
 } from '../controllers/users.controller.js'
 
 const router = express.Router();
@@ -23,6 +24,9 @@ router.get('/register-github', githubAuth);
 
 // Callback URL después de autenticarse con GitHub
 router.get('/profile',githubCallback);
+
+// Cambiar el rol de un usuario
+router.put('/api/users/premium/:uid', changeUserRoleController);
 
 export default router;
 

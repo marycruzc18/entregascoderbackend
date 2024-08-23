@@ -9,18 +9,31 @@ class CartRepository {
         return await CartModel.findById(cartId).populate('products.productId');
     }
 
-    async addProductToCart(cartId, productId, quantity) {
+    async addProductToCart(cartId, productId, user) {
         try {
+          
+            const product = await ProductModel.findById(productId);
+            if (!product) {
+                throw new Error('Producto no encontrado');
+            }
+
+         
+            if (user.role === 'premium' && product.owner === user.email) {
+                throw new Error('No puedes agregar a tu carrito un producto que te pertenece');
+            }
+
+          
             const cart = await this.getCartById(cartId);
             if (!cart) {
                 throw new Error('Carrito no encontrado');
             }
 
+          
             const existingProduct = cart.products.find(p => p.productId._id.toString() === productId);
             if (existingProduct) {
-                existingProduct.quantity += quantity;
+                existingProduct.quantity += 1; 
             } else {
-                cart.products.push({ productId, quantity });
+                cart.products.push({ productId, quantity: 1 }); 
             }
 
             return await cart.save();

@@ -20,7 +20,7 @@ router.get('/', getAllProducts);
 router.get('/:pid', getProductById);
 
 // Crear un nuevo producto
-router.post('/', uploader.single('thumbnail'), authenticate, authorize(['admin']), createProduct);
+router.post('/', uploader.single('thumbnail'), authenticate, authorize(['admin', 'premium']), createProduct);
 
 
 // Actualizar un producto existente
@@ -28,7 +28,7 @@ router.put('/:pid', uploader.single('thumbnail'), authenticate, authorize(['admi
 
 
 // Eliminar un producto
-router.delete('/:pid', authenticate, authorize(['admin']), deleteProduct);
+router.delete('/:pid', authenticate, authorize(['admin', 'premium']), deleteProduct);
 
 
 

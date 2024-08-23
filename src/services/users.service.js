@@ -10,7 +10,7 @@ const cartDao = new CartDao();
 
 export const registerUser = async (userData) => {
     try {
-        const { email, password, first_name, last_name, age } = userData;
+        const { email, password, first_name, last_name, age , role} = userData;
 
         const existingUser = await userDao.getByEmail(email);
         if (existingUser) {
@@ -18,7 +18,11 @@ export const registerUser = async (userData) => {
             throw new Error('El usuario ya existe');
         }
 
-        const role = (email === config.EMAIL_ADMIN && password === config.PASS_ADMIN) ? 'admin' : 'user';
+       
+        let userRole = role;
+        if (!userRole) {
+            userRole = (email === config.EMAIL_ADMIN && password === config.PASS_ADMIN) ? 'admin' : 'user';
+        }
 
         const hashedPassword = createHash(password);
     
@@ -28,7 +32,7 @@ export const registerUser = async (userData) => {
             first_name,
             last_name,
             age,
-            role
+            role: userRole
         });
 
 
@@ -80,3 +84,14 @@ export const getUserById = async (userId) => {
         throw new Error('Error al obtener el usuario: ' + error.message);
     }
 };
+
+export const changeUserRole = async (userId, role) => {
+    try {
+       
+        const updatedUser = await userDao.updateUserRole(userId, role);
+        return updatedUser;
+    } catch (error) {
+        throw new Error('Error al cambiar el rol del usuario: ' + error.message);
+    }
+};
+

@@ -1,8 +1,9 @@
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
-import { registerUser, loginUser, logoutUser, getUserById } from '../services/users.service.js';
+import { registerUser, loginUser, logoutUser, getUserById, changeUserRole  } from '../services/users.service.js';
 import config from '../config.js';
 import logger from '../logs/logger.js';
+
 
 export const register = async (req, res, next) => {
     
@@ -96,4 +97,34 @@ export const githubCallback = (req, res, next) => {
             next(error);
         }
     })(req, res, next);
+};
+
+
+
+export const changeUserRoleController = async (req, res) => {
+    const userId = req.params.uid;
+    const { role } = req.body;
+
+    console.log('User ID:', userId);  
+
+    try {
+       
+        if (!['user', 'premium'].includes(role)) {
+            logger.warn(`Rol inválido recibido: ${role}`);
+            return res.status(400).json({ error: 'Rol inválido' });
+        }
+
+      
+        const updatedUser = await changeUserRole(userId, role);
+        if (!updatedUser) {
+            logger.warn(`Usuario no encontrado con ID: ${userId}`);
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+  
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        logger.error(`Error al cambiar el rol del usuario: ${error.message}`);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
 };
