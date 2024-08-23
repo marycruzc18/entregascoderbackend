@@ -5,3 +5,192 @@
 2024-08-13 11:56:57 error: log error
 2024-08-13 11:57:27 error: log error
 2024-08-13 11:58:20 error: Error durante el registro del usuario: El usuario ya existe
+2024-08-19 20:45:40 error: JsonWebTokenError: jwt must be provided
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:60:17)
+    at resetPassword (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/recovery.email.controller.js:12:29)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:175:3)
+2024-08-19 21:52:30 error: JsonWebTokenError: jwt must be provided
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:60:17)
+    at resetPassword (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/reset.password.controller.js:12:29)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:175:3)
+2024-08-19 22:07:21 error: JsonWebTokenError: jwt must be provided
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:60:17)
+    at resetPassword (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/reset.password.controller.js:12:29)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:175:3)
+2024-08-19 22:46:15 error: JsonWebTokenError: jwt must be provided
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:60:17)
+    at resetPassword (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/reset.password.controller.js:12:29)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:175:3)
+2024-08-19 22:56:51 error: JsonWebTokenError: jwt must be provided
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:60:17)
+    at renderResetPasswordPage (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/email.recovery.controller.js:10:13)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:175:3)
+2024-08-19 22:57:07 error: JsonWebTokenError: jwt must be provided
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:60:17)
+    at renderResetPasswordPage (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/email.recovery.controller.js:10:13)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:175:3)
+2024-08-19 23:04:38 error: Token no proporcionado en la solicitud
+2024-08-19 23:07:46 error: JsonWebTokenError: jwt malformed
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:70:17)
+    at renderResetPasswordPage (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/email.recovery.controller.js:15:29)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:175:3)
+2024-08-19 23:12:32 error: JsonWebTokenError: jwt malformed
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:70:17)
+    at renderResetPasswordPage (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/email.recovery.controller.js:15:29)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:175:3)
+2024-08-19 23:16:50 error: Token no proporcionado en la solicitud
+2024-08-19 23:17:06 error: JsonWebTokenError: jwt malformed
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:70:17)
+    at renderResetPasswordPage (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/email.recovery.controller.js:15:29)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:175:3)
+2024-08-19 23:17:26 error: JsonWebTokenError: jwt malformed
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:70:17)
+    at renderResetPasswordPage (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/email.recovery.controller.js:15:29)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:175:3)
+2024-08-19 23:21:04 error: JsonWebTokenError: jwt malformed
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:70:17)
+    at renderResetPasswordPage (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/email.recovery.controller.js:15:29)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:175:3)
+2024-08-19 23:21:08 error: JsonWebTokenError: jwt malformed
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:70:17)
+    at renderResetPasswordPage (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/email.recovery.controller.js:15:29)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:175:3)
+2024-08-20 13:43:39 error: Token no proporcionado en la solicitud
+2024-08-20 13:56:04 error: Token no proporcionado en la solicitud
+2024-08-20 14:05:33 error: Token no proporcionado en la solicitud
+2024-08-20 14:16:39 error: Token no proporcionado en la solicitud
+2024-08-20 15:17:31 error: JsonWebTokenError: jwt must be provided
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:60:17)
+    at resetPassword (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/reset.password.controller.js:12:27)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:175:3)
+2024-08-21 00:01:12 error: TokenExpiredError: jwt expired
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:101:10)
+    at resetPassword (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/reset.password.controller.js:18:29)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+2024-08-21 00:16:17 error: TokenExpiredError: jwt expired
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:101:10)
+    at resetPassword (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/reset.password.controller.js:18:29)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+2024-08-21 00:23:15 error: TokenExpiredError: jwt expired
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\jsonwebtoken\verify.js:101:10)
+    at resetPassword (file:///C:/Users/maryc/OneDrive/Escritorio/Primer_Desafio/src/controllers/reset.password.controller.js:18:29)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\maryc\OneDrive\Escritorio\Primer_Desafio\node_modules\express\lib\router\index.js:346:12)
+2024-08-21 14:31:48 error: Error durante el registro del usuario: Error al registrar el usuario: User validation failed: role: `user` is not a valid enum value for path `role`.
+2024-08-21 14:31:48 error: Error al registrar usuario: Error al registrar el usuario: User validation failed: role: `user` is not a valid enum value for path `role`.
+2024-08-22 13:38:21 error: Error al cambiar el rol del usuario: Cannot read properties of undefined (reading 'uid')
+2024-08-22 13:42:00 error: Error al cambiar el rol del usuario: Cannot read properties of undefined (reading 'uid')
+2024-08-22 13:49:24 error: Error al cambiar el rol del usuario: Cannot read properties of undefined (reading 'uid')
+2024-08-22 13:52:25 error: Error al cambiar el rol del usuario: Cannot read properties of undefined (reading 'uid')
+2024-08-22 13:55:41 error: Error al cambiar el rol del usuario: Cannot read properties of undefined (reading 'uid')

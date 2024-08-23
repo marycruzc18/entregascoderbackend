@@ -39,7 +39,7 @@ export const getProductById = async (req, res) => {
 
 export const createProduct = async (req, res) => {
     try {
-        const savedProduct = await createProductService(req.body, req.file);
+        const savedProduct = await createProductService(req.body, req.file, req.user);
         res.status(201).json(savedProduct);
     } catch (error) {
         if (error.message.includes('requeridos')) {
@@ -56,7 +56,7 @@ export const createProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
     const productId = req.params.pid;
     try {
-        const updatedProduct = await updateProductService(productId, req.body, req.file);
+        const updatedProduct = await updateProductService(productId, req.body, req.file, req.user);
         res.status(200).json(updatedProduct);
     }  catch (error) {
         console.error('Error al actualizar el producto:', error.message);
@@ -72,7 +72,7 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
     const productId = req.params.pid;
     try {
-        await deleteProductService(productId);
+        await deleteProductService(productId,req.user);
         res.status(200).json({ msg: `Producto con ID ${productId} eliminado correctamente` });
     } catch (error) {
         console.error('Error al eliminar el producto:', error.message);
