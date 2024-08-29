@@ -1,0 +1,186 @@
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        code:
+          type: number
+        price:
+          type: number
+        status:
+          type: boolean
+        stock:
+          type: number
+        category:
+          type: string
+        thumbnail:
+          type: string
+        owner:
+          type: string
+
+paths:
+  /api/products:
+    get:
+      summary: Obtiene todos los productos
+      tags: 
+        - Products
+      responses:
+        '200':
+          description: Lista de productos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '500':
+          description: Error en el servidor
+
+    post:
+      summary: Crear un nuevo producto
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                code:
+                  type: number
+                price:
+                  type: number
+                stock:
+                  type: number
+                category:
+                  type: string
+                thumbnail:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Producto creado con éxito
+        '403':
+          description: No autorizado
+        '500':
+          description: Error en el servidor
+
+  /api/products/{pid}:
+    get:
+      summary: Obtiene un producto por ID
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID del producto
+      responses:
+        '200':
+          description: Producto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Producto no encontrado
+        '500':
+          description: Error en el servidor
+
+    put:
+      summary: Actualizar un producto existente
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID del producto
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                code:
+                  type: number
+                price:
+                  type: number
+                stock:
+                  type: number
+                category:
+                  type: string
+                thumbnail:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Producto actualizado con éxito
+        '403':
+          description: No autorizado
+        '404':
+          description: Producto no encontrado
+        '500':
+          description: Error en el servidor
+
+    delete:
+      summary: Eliminar un producto
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID del producto
+      responses:
+        '200':
+          description: Producto eliminado con éxito
+        '403':
+          description: No autorizado
+        '404':
+          description: Producto no encontrado
+        '500':
+          description: Error en el servidor
+          
+  /api/products/mockingproducts:
+    get:
+      summary: Se obtienen los productos creados por Mocking
+      tags: 
+        - Products
+      responses:
+        '200':
+          description: Productos obtenidos de forma exitosa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '500':
+          description: Error en el servidor
