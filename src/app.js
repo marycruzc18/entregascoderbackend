@@ -28,6 +28,9 @@ import "./passport/jwt_strategy.js";
 import "./passport/passport.js";
 import config from "./config.js";
 import morgan from 'morgan';
+import swaggerUI from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
+import {setSwagger} from './docs/swagger.js';
 
 
 
@@ -48,7 +51,10 @@ const storeConfig = {
 const app = express();
 
 
+//Swagger
+const specs = swaggerJSDoc(setSwagger);
 
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(specs));
 
 
 app.use(express.json());
