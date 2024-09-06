@@ -20,6 +20,9 @@ const config = {
 
         EMAIL: process.env.EMAIL,
         PASSWORD: process.env.PASSWORD,
+
+        USER_EMAIL:process.env.USER_EMAIL,
+        PASS_USER:process.env.PASS_USER,
     
 }
 
