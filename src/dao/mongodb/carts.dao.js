@@ -22,18 +22,6 @@ class CartDao {
     }
 
 
-    async getProductsInCart(cartId) {
-        try {
-            const cart = await CartModel.findById(cartId).populate('products.productId').exec();
-            if (!cart) {
-                throw new Error("Carrito no encontrado");
-            }
-            return cart;
-        } catch (error) {
-            throw new Error(`Error al obtener el carrito con ID ${cartId}: ${error.message}`);
-        }
-    }
-
     async addProductToCart(cartId, productId, quantity = 1) {
     try {
        

@@ -5,10 +5,10 @@ import UserDTO from '../dto/user.dto.js';
 
 const router = express.Router();
 
-// Ruta para devolver el usuario actual
+
 router.get('/current', passport.authenticate('current', { session: false }), (req, res) => {
     try {
-        // Crea una instancia del DTO
+        
         const userResponse = new UserDTO(req.user);
         res.json({ user: userResponse });
     } catch (error) {
