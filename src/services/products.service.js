@@ -1,5 +1,6 @@
 import ProductDao from "../dao/mongodb/products.dao.js";
 import { ProductModel } from "../dao/mongodb/models/products.model.js";
+import config from "../config.js"
 
 const productDao = new ProductDao();
 
@@ -14,9 +15,9 @@ export const getProductById = async (productId) => {
 
 export const createProduct = async (data, file,user) => {
     const {title,description, code, price, status, stock, category} = data;
-    const thumbnail = file ? `/images/${file.filename}` : null;
+    const thumbnail = file ? `/products/${file.filename}` : null;
 
-    const owner = user.role === 'premium' ? user.email : 'adminCoder@coder.com';
+    const owner = user.role === 'premium' ? user.email : config.EMAIL_ADMIN;
 
     const newProduct = new ProductModel({
         title,
@@ -46,7 +47,7 @@ export const updateProduct = async (productId,data,file,user) => {
         throw new Error('No tienes permiso para actualizar este producto');
     }
 
-    const thumbnail = file ? `/images/${file.filename}` : existingProduct.thumbnail;   
+    const thumbnail = file ? `/products/${file.filename}` : existingProduct.thumbnail;   
     
     return await ProductModel.findByIdAndUpdate(
         productId,

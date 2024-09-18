@@ -6,33 +6,36 @@ import TicketDao from "../dao/ticket.dao.js";
 const cartRepository = new CartRepository();
 const ticketDao = new TicketDao();
 
-export const addProductToUserCart = async (userId, productId, quantity) => {
+export const addProductToCartService = async (cartId, productId, quantity, userId) => {
     try {
         
-        const user = await UserModel.findById(userId).populate('cart');
-        if (!user) {
-            throw new Error('Usuario no encontrado');
-        }
-
-    
         const product = await ProductModel.findById(productId);
         if (!product) {
             throw new Error('Producto no encontrado');
         }
 
-    
-        if (!user.cart) {
-            const newCart = await cartRepository.createCart();
-            user.cart = newCart._id;
-            await user.save();
+        
+        const user = await UserModel.findById(userId);
+        if (!user) {
+            throw new Error('Usuario no encontrado');
         }
 
-   
-        return await cartRepository.addProductToCart(user.cart, productId, quantity);
+        
+        if (user.role === 'admin') {
+            throw new Error('Los administradores no pueden agregar productos a su carrito');
+        }
+
+        
+        if (user.role === 'premium' && product.owner === user.email) {
+            throw new Error('Los usuarios premium no pueden agregar productos que les pertenecen');
+        }
+
+        return await cartRepository.addProductToCart(cartId, productId, quantity);
     } catch (error) {
-        throw new Error('Error al agregar el producto al carrito del usuario: ' + error.message);
+        throw new Error('Error al agregar el producto al carrito: ' + error.message);
     }
 };
+
 
 export const createCart = async () => {
     try {

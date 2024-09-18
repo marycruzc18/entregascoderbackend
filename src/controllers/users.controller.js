@@ -1,6 +1,6 @@
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
-import { registerUser, loginUser, logoutUser, getUserById, changeUserRole  } from '../services/users.service.js';
+import { registerUser, loginUser, logoutUser, getUserById, changeUserRole,updateUserDocuments  } from '../services/users.service.js';
 import config from '../config.js';
 import logger from '../logs/logger.js';
 
@@ -10,7 +10,7 @@ export const register = async (req, res, next) => {
     try {
        logger.info('Intentando registrar un nuevo ususario');
 
-        const user = await registerUser(req.body);
+        const user = await registerUser(req.body,req.file);
 
        logger.info(`Usuario registrado exitosamente: ${user.email}`);
     
@@ -101,30 +101,57 @@ export const githubCallback = (req, res, next) => {
 
 
 
+
+
 export const changeUserRoleController = async (req, res) => {
-    const userId = req.params.uid;
+    console.log('Request body:', req.body);
+    console.log('Request files:', req.files);
+
+    const { uid } = req.params;
     const { role } = req.body;
 
-    console.log('User ID:', userId);  
+    if (!role) {
+        return res.status(400).json({ message: 'El rol es requerido para actualizar el usuario' });
+    }
+
+    if (role === 'premium') {
+    
+        const requiredFields = ['identificacion', 'comprobante de domicilio', 'comprobante de estado de cuenta'];
+        const missingFields = requiredFields.filter(field => !req.files[field] || req.files[field].length === 0);
+
+        if (missingFields.length > 0) {
+            return res.status(400).json({ message: `Faltan los documentos: ${missingFields.join(', ')}` });
+        }
+    }
 
     try {
-       
-        if (!['user', 'premium'].includes(role)) {
-            logger.warn(`Rol inválido recibido: ${role}`);
-            return res.status(400).json({ error: 'Rol inválido' });
-        }
-
-      
-        const updatedUser = await changeUserRole(userId, role);
-        if (!updatedUser) {
-            logger.warn(`Usuario no encontrado con ID: ${userId}`);
-            return res.status(404).json({ error: 'Usuario no encontrado' });
-        }
-
-  
-        res.status(200).json(updatedUser);
+        const updatedUser = await changeUserRole(uid, role, req.files);
+        return res.status(200).json(updatedUser);
     } catch (error) {
-        logger.error(`Error al cambiar el rol del usuario: ${error.message}`);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        console.error('Error:', error);
+        return res.status(500).json({ message: `Error al cambiar el rol del usuario: ${error.message}` });
     }
 };
+
+
+export const uploadDocuments = async (req, res) => {
+    const { uid } = req.params;
+    const files = req.files;
+
+    console.log('Archivos recibidos:', files); 
+
+    try {
+        if (!files || files.length === 0) {
+            return res.status(400).json({ message: 'No se subieron documentos' });
+        }
+
+        const updatedDocuments = await updateUserDocuments(uid, files);
+        res.status(200).json({
+            message: 'Documentos subidos con éxito',
+            documents: updatedDocuments
+        });
+    } catch (error) {
+        res.status(500).json({ message: `Error al subir documentos: ${error.message}` });
+    }
+};
+

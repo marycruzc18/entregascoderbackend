@@ -1,4 +1,5 @@
 import CartModel from '../dao/mongodb/models/carts.model.js';
+import { ProductModel } from '../dao/mongodb/models/products.model.js';
 
 class CartRepository {
     async createCart() {
@@ -10,38 +11,46 @@ class CartRepository {
     }
 
     async addProductToCart(cartId, productId, user) {
+        const session = await CartModel.startSession();
+        session.startTransaction();
         try {
-          
+            
             const product = await ProductModel.findById(productId);
             if (!product) {
                 throw new Error('Producto no encontrado');
             }
 
-         
             if (user.role === 'premium' && product.owner === user.email) {
                 throw new Error('No puedes agregar a tu carrito un producto que te pertenece');
             }
 
-          
+            
             const cart = await this.getCartById(cartId);
             if (!cart) {
                 throw new Error('Carrito no encontrado');
             }
 
-          
+            
             const existingProduct = cart.products.find(p => p.productId._id.toString() === productId);
             if (existingProduct) {
                 existingProduct.quantity += 1; 
             } else {
-                cart.products.push({ productId, quantity: 1 }); 
+                cart.products.push({ productId, quantity: 1 });
             }
 
-            return await cart.save();
+            
+            await cart.save({ session });
+
+            
+            await session.commitTransaction();
+            session.endSession();
+            return cart;
         } catch (error) {
+            await session.abortTransaction();
+            session.endSession();
             throw new Error(`Error al agregar el producto al carrito: ${error.message}`);
         }
     }
-
     async getAllCarts() {
         return await CartModel.find().populate('products.productId').exec();
     }

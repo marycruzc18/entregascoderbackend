@@ -5,12 +5,14 @@ import CartDao from '../dao/mongodb/carts.dao.js';
 import { createHash, isValidPassword } from '../utils.js';
 import logger from '../logs/logger.js';
 
+
 const userDao = new UserDao();
 const cartDao = new CartDao();
 
-export const registerUser = async (userData) => {
+export const registerUser = async (userData,file) => {
     try {
         const { email, password, first_name, last_name, age , role} = userData;
+        const profileImage = file ? `/profiles/${file.filename}` : null;
 
         const existingUser = await userDao.getByEmail(email);
         if (existingUser) {
@@ -32,7 +34,9 @@ export const registerUser = async (userData) => {
             first_name,
             last_name,
             age,
-            role: userRole
+            role: userRole,
+            profileImage
+
         });
 
 
@@ -66,14 +70,23 @@ export const loginUser = async (email, password) => {
     }
 };
 
-export const logoutUser = (req) => {
-    return new Promise((resolve, reject) => {
-        req.logout(err => {
-            if (err) {
-                return reject(new Error('No se pudo cerrar la sesión'));
+export const logoutUser = async (req) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+    
+            if (req.user) {
+                await userDao.updateLastConnection(req.user._id);
             }
-            resolve();
-        });
+
+            req.logout(err => {
+                if (err) {
+                    return reject(new Error('No se pudo cerrar la sesión'));
+                }
+                resolve();
+            });
+        } catch (error) {
+            reject(new Error('Error al actualizar la última conexión del usuario: ' + error.message));
+        }
     });
 };
 
@@ -85,13 +98,72 @@ export const getUserById = async (userId) => {
     }
 };
 
-export const changeUserRole = async (userId, role) => {
+
+export const changeUserRole = async (userId, role, files) => {
     try {
-       
-        const updatedUser = await userDao.updateUserRole(userId, role);
-        return updatedUser;
+    
+        const user = await userDao.getById(userId);
+        if (!user) {
+            throw new Error('Usuario no encontrado');
+        }
+
+        if (user.role === 'user' && role === 'premium') {
+        
+            const requiredFields = ['identificacion', 'comprobante de domicilio', 'comprobante de estado de cuenta'];
+            const missingFields = requiredFields.filter(field => !files[field] || files[field].length === 0);
+
+            if (missingFields.length > 0) {
+                throw new Error(`No se han subido los documentos requeridos: ${missingFields.join(', ')}`);
+            }
+
+            await updateUserDocuments(userId, files);
+        }
+
+    
+        if (role !== 'user' && role !== 'premium') {
+            throw new Error('Rol inválido');
+        }
+        
+        user.role = role;
+        
+        await user.save();
+
+        return { success: true, message: 'Rol actualizado exitosamente' };
+
     } catch (error) {
-        throw new Error('Error al cambiar el rol del usuario: ' + error.message);
+        console.error('Error en la función changeUserRole:', error.message);
+        throw new Error(`Error al cambiar el rol del usuario: ${error.message}`);
     }
 };
 
+export const updateUserDocuments = async (userId, files) => {
+    try {
+        const user = await userDao.getById(userId);
+        if (!user) throw new Error('Usuario no encontrado');
+
+
+        if (!files || typeof files !== 'object') {
+            throw new Error('Formato de archivos inválido');
+        }
+
+        const documents = [];
+
+    
+        for (const [key, value] of Object.entries(files)) {
+            if (Array.isArray(value)) {
+                value.forEach(file => {
+                    documents.push({
+                        name: file.originalname,
+                        reference: `/documents/${file.filename}`
+                    });
+                });
+            }
+        }
+
+
+        user.documents = [...user.documents, ...documents];
+        return await user.save();
+    } catch (error) {
+        throw new Error('Error al actualizar documentos del usuario: ' + error.message);
+    }
+};

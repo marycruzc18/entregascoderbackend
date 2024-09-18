@@ -6,10 +6,10 @@
                     <h1>Bienvenidos al Ecommerce</h1>
     
                   
-                      {{#if user}}
-                        <p>Bienvenido, {{user.first_name}} {{user.last_name}} ({{user.role}})</p>
+                     {{#if user}}
+                    <p>Bienvenido, {{user.first_name}} {{user.last_name}} ({{user.role}})</p>
                     {{else}}
-                        <p>Por favor, inicia sesión</p>
+                    <p>Por favor, inicia sesión</p>
                     {{/if}}
 
                 
@@ -17,7 +17,7 @@
 
 
                 </div>
-            <form action="logout" method="POST">
+            <form action="/logout" method="POST">
                 <button class="btn btn-success" type="submit">Logout</button>
             </form> 
         </header>
