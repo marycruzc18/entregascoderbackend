@@ -32,6 +32,15 @@ class CartDao {
         const product = await ProductModel.findById(productId);
         if (!product) throw new Error('Producto no encontrado');
 
+        
+        if (user.role === 'admin') {
+            throw new Error('Los administradores no pueden agregar productos a su carrito');
+        }
+
+        
+        if (user.role === 'premium' && product.owner === user.email) {
+            throw new Error('No puedes agregar tu propio producto al carrito');
+        }
        
         const existingProduct = cart.products.find(p => p.productId.toString() === productId);
         if (existingProduct) {

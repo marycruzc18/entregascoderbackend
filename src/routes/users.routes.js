@@ -5,13 +5,15 @@ import {
     logout,
     githubAuth,
     githubCallback,
-    changeUserRoleController
-} from '../controllers/users.controller.js'
+    changeUserRoleController,
+    uploadDocuments
+} from '../controllers/users.controller.js';
+import { profileUploader,documentUploader} from '../middlewares/multer.js';
 
 const router = express.Router();
 
 // Ruta para el registro
-router.post('/register', register);
+router.post('/register',profileUploader.single('profileImage'), register);
 
 // Ruta para iniciar sesión
 router.post('/login', login);
@@ -26,7 +28,21 @@ router.get('/register-github', githubAuth);
 router.get('/profile',githubCallback);
 
 // Cambiar el rol de un usuario
-router.put('/api/users/premium/:uid', changeUserRoleController);
+router.put('/api/users/premium/:uid', documentUploader.fields([
+    { name: 'identificacion', maxCount: 1 }, 
+    { name: 'comprobante de domicilio', maxCount: 1 },
+    { name: 'comprobante de estado de cuenta', maxCount: 1 },
+]), (req, res) => {
+    console.log('Archivos recibidos:', req.files); 
+    console.log('Campos recibidos:', req.body); 
+    changeUserRoleController(req, res);
+});
+
+
+
+
+// Ruta para subir uno o múltiples documentos
+router.post('/:uid/documents', documentUploader.array('documents', 5), uploadDocuments);
 
 export default router;
 

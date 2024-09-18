@@ -9,7 +9,7 @@ export default class UserDao{
         try {
             const existUser = await UserModel.findOne({ email: userData.email });
             if (existUser) {
-                return null; // Usuario ya existe
+                return null; 
             }
             
             const user = new UserModel(userData);
@@ -36,13 +36,18 @@ export default class UserDao{
         try {
             const user = await UserModel.findOne({ email });
             if (!user) {
-                return null; // Usuario no encontrado
+                return null;
             }
-            // Se valida la contraseña
+            
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
-                return null; // Contraseña incorrecta
+                return null; 
             }
+
+            user.last_connection=new Date();
+            await user.save();
+
+
             return user;
         } catch (error) {
             throw new Error('Error al iniciar sesión: ' + error.message);
@@ -83,4 +88,12 @@ async updateUserRole(userId, newRole) {
 }
 
 
+async updateLastConnection(userId) {
+    try {
+        await UserModel.findByIdAndUpdate(userId, { last_connection: new Date() });
+    } catch (error) {
+        throw new Error('Error al actualizar la última conexión del usuario: ' + error.message);
+    }
 }
+}
+

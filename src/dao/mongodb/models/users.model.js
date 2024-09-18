@@ -12,7 +12,15 @@ const userSchema = new mongoose.Schema({
     isGithub: {
         type: Boolean,
         default: false
+      },
+    documents:[
+      {
+        name:{type:String, required: true},
+        reference:{type:String, required:true }
       }
+    ],
+    last_connection:{type:Date},
+    profileImage: { type: String }
 
 });
 

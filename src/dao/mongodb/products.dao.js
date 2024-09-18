@@ -4,10 +4,10 @@ export default class ProductDao {
     async getProducts( page = 1, limit = 10, sort, category ) {
         try {
 
-            // filtro 
+            
             const filter = category ? { category: category } : {};
 
-            //paginación 
+            
 
        const options = {
                 page: parseInt(page),
@@ -15,10 +15,10 @@ export default class ProductDao {
                 sort: sort ? { price: sort === 'asc' ? 1 : -1 } : null
             };
 
-            // Consultar los productos con paginación y filtro
+            
             const products = await ProductModel.paginate(filter, options);
 
-            // Construir el objeto de respuesta
+            
             const response = {
                 status: 'success',
                 payload: products.docs,
