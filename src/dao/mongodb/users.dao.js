@@ -95,5 +95,41 @@ async updateLastConnection(userId) {
         throw new Error('Error al actualizar la última conexión del usuario: ' + error.message);
     }
 }
+
+async getAllUsers(){
+    try{
+        return await UserModel.find();
+    }catch(error){
+        throw new Error('Error al mostrar a los usuarios:' + error.message);
+    }
+    
+}
+
+async getInactiveUsers(minutes){
+    try{
+        const cutoffdate = new Date(Date.now() - minutes * 60 * 1000);
+        return await UserModel.find({last_connection: {$lt:cutoffdate},role: { $ne: 'admin' }});
+    }catch(error){
+        throw new Error ('Error al obtener los usuarios que estan inactivos' + error.message );
+    }
+} 
+
+async deleteUsersById(userId){
+    try{
+        return await UserModel.deleteMany({_id: { $in:userId}});
+    }catch(error){
+        throw new Error ('Error al eliminar a los usuarios ' + error.message );
+    }
+}
+
+
+async deleteUser(userId) {
+    try {
+        return await UserModel.findByIdAndDelete(userId);
+    } catch (error) {
+        throw new Error('Error al eliminar al usuario: ' + error.message);
+    }
+}
+
 }
 

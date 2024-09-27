@@ -6,7 +6,9 @@ import {
     githubAuth,
     githubCallback,
     changeUserRoleController,
-    uploadDocuments
+    uploadDocuments,
+    getAllUsersController,
+    removeInactiveUsers
 } from '../controllers/users.controller.js';
 import { profileUploader,documentUploader} from '../middlewares/multer.js';
 
@@ -39,10 +41,14 @@ router.put('/api/users/premium/:uid', documentUploader.fields([
 });
 
 
-
-
 // Ruta para subir uno o múltiples documentos
 router.post('/:uid/documents', documentUploader.array('documents', 5), uploadDocuments);
+
+//Ruta para obtener todos los usuarios 
+router.get('/users', getAllUsersController);
+
+//Ruta para eliminar usuarios inactivos
+router.delete('/users/inactive', removeInactiveUsers);
 
 export default router;
 

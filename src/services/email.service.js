@@ -18,21 +18,49 @@ const transporter = createTransport({
   const createMsgReset = (first_name, token) => 
     `<p>¡Hola ${first_name}! Hacé click <a href="http://localhost:8080/reset-password?token=${token}">AQUÍ</a> para restablecer tu contraseña.</p>`;
  
-  export const sendMail = async (user, service, token = null) => {
+  const createMsgDeleteAccount = (first_name) => 
+    `<p>Hola ${first_name},</p>
+     <p>Lamentamos informarte que tu cuenta ha sido eliminada debido a inactividad prolongada.</p>
+     <p>Si tienes alguna pregunta, por favor contacta con nuestro soporte.</p>`;
+  
+     const createMsgDeleteProduct = (first_name, productName) => 
+      `<p>Hola ${first_name},</p>
+       <p>Te informamos que tu producto <strong>${productName}</strong> ha sido eliminado del sistema.</p>`;
+      
+
+  export const sendMail = async (user, service, token = null,productName = null) => {
     try {
       const { first_name, email } = user;
   
       let msg = '';
-      if (service === 'register') {
-        msg = createMsgRegister(first_name);
-      } else if (service === 'resetPass') {
-        if (!token) {
-          throw new Error('Token is required for password reset');
-        }
-        msg = createMsgReset(first_name, token);
-      }
+      let subj = '';
   
-      const subj = service === 'register' ? 'Bienvenido/a' : 'Restablecimiento de contraseña';
+      switch (service) {
+        case 'register':
+          msg = createMsgRegister(first_name);
+          subj = 'Bienvenido/a';
+          break;
+        case 'resetPass':
+          if (!token) {
+            throw new Error('Token es requerido para el restablecimiento de contraseña');
+          }
+          msg = createMsgReset(first_name, token);
+          subj = 'Restablecimiento de contraseña';
+          break;
+        case 'deleteAccount':
+          msg = createMsgDeleteAccount(first_name);
+          subj = 'Cuenta eliminada por inactividad';
+          break;
+        case 'deleteProduct':
+          if (!productName) {
+            throw new Error('El nombre del producto es requerido para la notificación');
+          }
+          msg = createMsgDeleteProduct(first_name, productName);
+          subj = 'Producto eliminado';
+          break;
+        default:
+          throw new Error('Servicio de correo no reconocido');
+      }
   
       const gmailOptions = {
         from: config.EMAIL,

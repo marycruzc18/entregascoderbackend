@@ -130,33 +130,43 @@ class CartDao {
 
     async purchaseCart(cartId, userId) {
         try {
+         
             const cart = await CartModel.findById(cartId).populate('products.productId').exec();
             if (!cart) {
                 throw new Error("Carrito no encontrado");
             }
-
+    
             let totalAmount = 0;
             const purchasedProducts = [];
             const failedProducts = [];
-
+    
             for (const item of cart.products) {
                 const product = await ProductModel.findById(item.productId);
+                if (!product) {
+                    failedProducts.push(item);
+                    continue;  
+                }
+    
                 if (product.stock >= item.quantity) {
+                    
                     product.stock -= item.quantity;
-                    await product.save();
+                    await product.save();  
+    
+               
                     totalAmount += product.price * item.quantity;
-                    purchasedProducts.push(item);
+                    purchasedProducts.push(item);  
                 } else {
+
                     failedProducts.push(item);
                 }
             }
-
+    
             return { totalAmount, purchasedProducts, failedProducts, purchaser: userId };
         } catch (error) {
             throw new Error(`Error al finalizar la compra: ${error.message}`);
         }
     }
-
+    
     async updateCartAfterPurchase(cartId, failedProducts) {
         try {
             const cart = await CartModel.findById(cartId);

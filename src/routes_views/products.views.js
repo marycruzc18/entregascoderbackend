@@ -6,9 +6,6 @@ const router = express.Router();
 
 router.get('/products', authenticateJWT, getAllProducts);
 
-
-
-
 router.get('/:id', getProductById);
 
 export default router;
