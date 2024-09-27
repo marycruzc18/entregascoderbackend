@@ -172,7 +172,7 @@ export const getAllUsersController = async (req, res) => {
 
 export const removeInactiveUsers = async (req, res) => {
     try{
-        const holdInMinutes = req.query.minutes || 3;
+        const holdInMinutes = req.query.minutes || 2880;
         const result = await deleteInactiveUsers(holdInMinutes);
 
         res.status(200).json({
