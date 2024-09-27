@@ -1,6 +1,8 @@
 import ProductDao from "../dao/mongodb/products.dao.js";
 import { ProductModel } from "../dao/mongodb/models/products.model.js";
-import config from "../config.js"
+import { UserModel } from "../dao/mongodb/models/users.model.js";
+import config from "../config.js";
+import { sendMail } from "./email.service.js";
 
 const productDao = new ProductDao();
 
@@ -67,6 +69,13 @@ export const deleteProduct = async (productId, user) => {
     }
 
     const deletedProduct = await ProductModel.findByIdAndDelete(productId);
+    if (existingProduct.owner && user.role === 'premium') {
+        const owner = await UserModel.findOne({ email: existingProduct.owner });
+        if (owner) {
+            await sendMail(owner, 'deleteProduct', null, existingProduct.title);
+        }
+    }
+
     return deletedProduct;
 
 };

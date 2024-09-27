@@ -1,8 +1,9 @@
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
-import { registerUser, loginUser, logoutUser, getUserById, changeUserRole,updateUserDocuments  } from '../services/users.service.js';
+import { registerUser, loginUser, logoutUser, getUserById, changeUserRole,updateUserDocuments, getAllUsers, deleteInactiveUsers  } from '../services/users.service.js';
 import config from '../config.js';
 import logger from '../logs/logger.js';
+
 
 
 export const register = async (req, res, next) => {
@@ -46,7 +47,11 @@ export const login = (req, res, next) => {
             );
             res.cookie('jwt', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
             console.log('Usuario logueado:', user);
-            res.redirect('/products');
+            if (user.role === 'admin') {
+                return res.redirect('/adminView'); 
+            } else {
+                return res.redirect('/products'); 
+            }
         } catch (error) {
             console.error('Error al iniciar sesión:', error);
             next(error);
@@ -154,4 +159,31 @@ export const uploadDocuments = async (req, res) => {
         res.status(500).json({ message: `Error al subir documentos: ${error.message}` });
     }
 };
+
+export const getAllUsersController = async (req, res) => {
+    try{
+        const users = await getAllUsers();
+        res.status(200).json(users);
+    }catch(error){
+        console.error('Error al obtener los usuarios' , error.message);
+        res.status(500).json({message: 'Error al obtener los usuarios'});
+    }
+};
+
+export const removeInactiveUsers = async (req, res) => {
+    try{
+        const holdInMinutes = req.query.minutes || 3;
+        const result = await deleteInactiveUsers(holdInMinutes);
+
+        res.status(200).json({
+            message:result.message,
+            result:result.result,
+        });
+    }catch(error){
+        res.status(500).json({
+            message: 'Error eliminando usuarios inactivos',
+            error: error.message,
+        });
+    }
+}
 

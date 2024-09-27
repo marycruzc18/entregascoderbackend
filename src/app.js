@@ -70,6 +70,9 @@ app.use(passport.session());
 app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views")
+
+
+
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartRouter)
 app.use('/vista/home', homeRouter)

@@ -13,7 +13,7 @@ export const getCartById = async (req, res) => {
             return;
         }
 
-        // Mapeo de los productos para pasarlos a la plantilla
+        
         const cartProducts = cart.products.map(p => {
             if (p.productId) {
                 return {

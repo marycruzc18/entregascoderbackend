@@ -203,3 +203,4 @@
 2024-09-16 21:35:12 error: Error al cambiar el rol del usuario: userDao is not defined
 2024-09-16 21:42:24 error: Error al cambiar el rol del usuario: userDao is not defined
 2024-09-17 12:37:56 error: Error al cambiar el rol del usuario: Error al obtener el usuario: Error al obtener el usuario: connect ECONNREFUSED 52.67.92.212:27017
+2024-09-26 13:32:53 error: log error

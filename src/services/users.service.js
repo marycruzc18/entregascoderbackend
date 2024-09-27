@@ -4,6 +4,7 @@ import UserDao from '../dao/mongodb/users.dao.js';
 import CartDao from '../dao/mongodb/carts.dao.js';
 import { createHash, isValidPassword } from '../utils.js';
 import logger from '../logs/logger.js';
+import { sendMail } from './email.service.js';
 
 
 const userDao = new UserDao();
@@ -165,5 +166,74 @@ export const updateUserDocuments = async (userId, files) => {
         return await user.save();
     } catch (error) {
         throw new Error('Error al actualizar documentos del usuario: ' + error.message);
+    }
+};
+
+
+export const getAllUsers = async () => {
+    try{
+        const users = await userDao.getAllUsers();
+        const usersFil = users.map(user =>({
+            _id:user._id,
+            first_name: user.first_name,
+            last_name:user.last_name,
+            email:user.email,
+            role:user.role
+        }));
+
+        return usersFil;
+    }catch(error){
+        throw new Error ('Error al obtener los usuarios:'+ error.message )
+    }
+};
+
+export const deleteInactiveUsers = async (holdInMinutes = 3) => {
+    try {
+      const inactiveUsers = await userDao.getInactiveUsers(holdInMinutes);
+      if (inactiveUsers.length === 0) {
+        return { message: 'No hay usuarios inactivos para eliminar' };
+      }
+
+      const nonAdminUsers = inactiveUsers.filter(user => user.role !== 'admin');
+
+    if (nonAdminUsers.length === 0) {
+      return { message: 'No hay usuarios inactivos no administradores para eliminar' };
+    }
+  
+      const userIds = [];
+      for (const user of nonAdminUsers) {
+        try {
+          await sendMail(user, 'deleteAccount'); 
+          userIds.push(user._id);
+        } catch (error) {
+          console.error(`Error enviando correo a ${user.email}: ${error.message}`);
+        }
+      }
+  
+      const deleteResult = await userDao.deleteUsersById(userIds);
+      return {
+        message: `${userIds.length} usuarios eliminados por inactividad`,
+        result: deleteResult,
+      };
+    } catch (error) {
+      throw new Error('Error eliminando usuarios inactivos: ' + error.message);
+    }
+  };
+  
+  export const changeUserRoleView = async (userId, newRole) => {
+    try {
+        const user = await userDao.updateUserRole(userId, newRole);
+        return user;
+    } catch (error) {
+        throw new Error('Error al cambiar el rol del usuario: ' + error.message);
+    }
+};
+
+export const deleteUserView = async (userId) => {
+    try {
+        const result = await userDao.deleteUser(userId);
+        return result;
+    } catch (error) {
+        throw new Error('Error al eliminar el usuario: ' + error.message);
     }
 };
