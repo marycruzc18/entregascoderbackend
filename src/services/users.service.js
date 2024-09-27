@@ -187,7 +187,7 @@ export const getAllUsers = async () => {
     }
 };
 
-export const deleteInactiveUsers = async (holdInMinutes = 3) => {
+export const deleteInactiveUsers = async (holdInMinutes = 2880) => {
     try {
       const inactiveUsers = await userDao.getInactiveUsers(holdInMinutes);
       if (inactiveUsers.length === 0) {
